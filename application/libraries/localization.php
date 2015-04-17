@@ -100,7 +100,8 @@ class Localization {
 		);
 		return $localize[$this->CI->uri->segment(1)][$section][$method];
 	}
-function getWithdrawPlace($section = '',$method = ''){
+
+    function getWithdrawPlace($section = '',$method = ''){
 
 		$localize[ENGLAN] = array(
 			'client_cabinet' => array(
@@ -123,5 +124,4 @@ function getWithdrawPlace($section = '',$method = ''){
 		);
 		return $localize[$this->CI->uri->segment(1)][$section][$method];
 	}
-
 }

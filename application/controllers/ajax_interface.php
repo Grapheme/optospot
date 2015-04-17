@@ -83,7 +83,35 @@ class Ajax_interface extends MY_Controller {
 		endif;
 		echo json_encode($json_request);
 	}
-	
+
+    public function createAffiliateAccount(){
+
+        $this->load->model('users_affiliate');
+        $json_request = array('status'=>FALSE,'responseText'=>'','redirect'=>site_url());
+        if(!$this->input->is_ajax_request()):
+            show_error('Access Denied');
+        endif;
+        if ($this->profile['demo']):
+            show_error('Access Denied');
+        endif;
+        if ($this->users_affiliate->getWhere(NULL,array('user_id'=>$this->profile['id']))):
+            show_error('Access Denied');
+        endif;
+        if($this->postDataValidation('signup_affiliate') == TRUE):
+            if($resultData = $this->sendResisterAffiliateData($this->input->post())):
+                $mailtext = $this->load->view('mails/signup-affiliate',array('account'=>$resultData['accountID'],'reg_data'=>$resultData),TRUE);
+                $this->sendMail($resultData['email'],'support@optospot.net','Optospot trading platform','Welcome to Optospot.net',$mailtext);
+                $json_request['status'] = TRUE;
+                $json_request['redirect'] = site_url($this->uri->segment(1).'/cabinet/partner-program');
+            else:
+                $json_request['responseText'] = $this->localization->getLocalMessage('signup','failure');
+            endif;
+        else:
+            $json_request['responseText'] = $this->localization->getLocalMessage('signup','failure');
+        endif;
+        echo json_encode($json_request);
+    }
+
 	public function createRealAccount(){
 		
 		if(!$this->input->is_ajax_request()):
@@ -102,7 +130,7 @@ class Ajax_interface extends MY_Controller {
                 if (isset($_COOKIE["pp_reg"])):
                     $partnerID = $_COOKIE["pp_reg"];
                     $partnerDemo = 0;
-                    $partner = $this->accounts->getWhere(NULL,array('remote_id'=>$partnerID,'demo'=>$partnerDemo));
+                    $partner = $this->accounts->getWhere($partnerID,array('demo'=>$partnerDemo));
                     if (!empty($partnerID) && $partner):
                         $this->load->model('partner_program');
                         if (!$this->partner_program->getWhere(NULL,array('partner_id'=>$partner['id'],'invite_id'=>@$resultData['accountID']['id']))):
@@ -179,52 +207,6 @@ class Ajax_interface extends MY_Controller {
 		echo json_encode(array('vlink'=>$this->settings->value(2,'link')));
 	}
 
-	public function sendResisterData($registerData = FALSE,$setModeStatus = NULL){
-
-		if(file_exists(getcwd().'/BaseJsonRpcClient.php') && $registerData !== FALSE):
-			include_once getcwd().'/BaseJsonRpcClient.php';
-			$this->load->model(array('settings'));
-			$client = new BaseJsonRpcClient($this->settings->value(1,'link'));
-			$demoStatus = TRUE;
-			if(!is_null($setModeStatus)):
-				$registerData['account_type'] = $setModeStatus;
-			endif;
-            $office = 'Main';
-			if($registerData['account_type'] == 1):
-				$registerData['mode'] = 'demo';
-				$schema = 'edforex184';
-			else:
-				$registerData['mode'] = 'real';
-				$schema = 'eforex184';
-				$demoStatus = FALSE;
-                if (isset($_COOKIE["pp_reg"])):
-                    $office = $_COOKIE["pp_reg"];
-                endif;
-			endif;
-			$params = array('providerId'=>'ICTS','fields'=>array('fname'=>$registerData['fname'],'lname'=>$registerData['lname'],'schema$'=>$schema,'office'=>$office,'Send_Email'=>'N','email'=>$registerData['email'],'phone'=>'','Gen_Login'=> 'COMPANY'));
-            if($registerData['account_type'] == 1):
-				$params['fields']['Balance'] = '1000';
-			endif;
-			$response = $client->registrate($params);
-			if(!empty($response->Result)):
-				$registerData['remote_id'] = intval($response->Result['ACCOUNT']);
-				$registerData['trade_login'] = (string)$response->Result['LOGIN'];
-				$registerData['password'] = (string)$response->Result['PASSWORD'];
-				$this->load->model('languages');
-				$registerData['language'] = $this->languages->getLanguageID($this->uri->segment(1));
-				if($registerData['remote_id']):
-					if($accountID = $this->ExecuteCreatingAccount($registerData)):
-						return array('accountID'=>$accountID,'demoStatus'=>$demoStatus,'login'=>$registerData['trade_login'],'password'=>$registerData['password']);
-					endif;
-				endif;
-			else:
-				$this->registerLoging($response);
-				$statusval['message'] = $this->localization->getLocalMessage('signup','server_failure');
-			endif;
-		endif;
-		return FALSE;
-	}
-	
 	public function withdrawRequest($registerData = FALSE){
 
 		if(!$this->input->is_ajax_request()):
@@ -324,4 +306,114 @@ class Ajax_interface extends MY_Controller {
 		$data = "[".$responce."]";
 		echo $data;
 	}
+    /***********************************************************************************************/
+    public function sendResisterData($registerData = FALSE,$setModeStatus = NULL){
+
+        if(file_exists(getcwd().'/BaseJsonRpcClient.php') && $registerData !== FALSE):
+            include_once getcwd().'/BaseJsonRpcClient.php';
+            $this->load->model(array('settings'));
+            $client = new BaseJsonRpcClient($this->settings->value(1,'link'));
+            $demoStatus = TRUE;
+            if(!is_null($setModeStatus)):
+                $registerData['account_type'] = $setModeStatus;
+            endif;
+            $office = 'Main';
+            if($registerData['account_type'] == 1):
+                $registerData['mode'] = 'demo';
+                $schema = 'edforex184';
+            else:
+                $registerData['mode'] = 'real';
+                $schema = 'eforex184';
+                $demoStatus = FALSE;
+                if (isset($_COOKIE["pp_reg"])):
+                    $this->load->model('users_affiliate');
+                    $affiliate = $this->users_affiliate->getWhere(NULL,array('user_id'=>$_COOKIE["pp_reg"]));
+                    $office = $affiliate['remote_id'];
+                endif;
+            endif;
+            $params = array('providerId'=>'ICTS','fields'=>array('fname'=>$registerData['fname'],'lname'=>$registerData['lname'],'schema$'=>$schema,'office'=>$office,'Send_Email'=>'N','email'=>$registerData['email'],'phone'=>'','Gen_Login'=> 'COMPANY'));
+            if($registerData['account_type'] == 1):
+                $params['fields']['Balance'] = '1000';
+            endif;
+            $response = $client->registrate($params);
+            if(!empty($response->Result)):
+                $registerData['remote_id'] = intval($response->Result['ACCOUNT']);
+                $registerData['trade_login'] = (string)$response->Result['LOGIN'];
+                $registerData['password'] = (string)$response->Result['PASSWORD'];
+                $this->load->model('languages');
+                $registerData['language'] = $this->languages->getLanguageID($this->uri->segment(1));
+                if($registerData['remote_id']):
+                    if($accountID = $this->ExecuteCreatingAccount($registerData)):
+                        return array('accountID'=>$accountID,'demoStatus'=>$demoStatus,'login'=>$registerData['trade_login'],'password'=>$registerData['password']);
+                    endif;
+                endif;
+            else:
+                $this->registerLoging($response);
+                $statusval['message'] = $this->localization->getLocalMessage('signup','server_failure');
+            endif;
+        endif;
+        return FALSE;
+    }
+
+    public function sendResisterAffiliateData($registerData){
+
+        if(file_exists(getcwd().'/BaseJsonRpcClient.php') && $registerData !== FALSE):
+            include_once getcwd().'/BaseJsonRpcClient.php';
+            $this->load->model(array('settings'));
+            $client = new BaseJsonRpcClient($this->settings->value(1,'link'));
+            $params = array(
+                'providerId' => 'ICTS',
+                'fields' => array(
+                    'fname' => $registerData['first_name'], 'lname' => $registerData['last_name'],
+                    'passport' => $registerData['passport_id'],
+                    'email' => $registerData['email'], 'address1' => $registerData['address1'],
+                    'city' => $registerData['city'],
+                    'state' => $registerData['state'], 'country' => $registerData['country'],
+                    'phone' => $registerData['phone'],
+                    'departmental' => $registerData['departmental'], 'country' => $registerData['country'],
+                    'phone' => $registerData['phone'],
+                    'schema$' => 'eforex184', 'Email_From' => '', 'office' => $registerData['office'],
+                    'Send_Email' => 'N',
+                    'Withhold_Percent' => 3, 'Cust_Type' => 'AFFILIATE'
+                )
+            );
+            $response = $client->registrate($params);
+            if(!empty($response->Result)):
+                $registerData['remote_id'] = intval($response->Result['ACCOUNT']);
+                $registerData['login'] = (string)$response->Result['LOGIN'];
+                $registerData['password'] = (string)$response->Result['PASSWORD'];
+                if($registerData['remote_id']):
+                    if($accountID = $this->ExecuteCreatingAffiliateAccount($registerData)):
+                        return array('accountID'=>$accountID,'email'=>$registerData['email'],'login'=>$registerData['login'],'password'=>$registerData['password']);
+                    endif;
+                endif;
+            else:
+                $this->registerLoging($response);
+                $statusval['message'] = $this->localization->getLocalMessage('signup','server_failure');
+            endif;
+        endif;
+        return FALSE;
+    }
+    /***********************************************************************************************/
+
+    private function ExecuteCreatingAffiliateAccount($registerData = NULL){
+
+        $affiliate = array(
+            'user_id' => $this->profile['id'],
+            'remote_id' => $registerData['remote_id'],
+            'login' => $registerData['login'],
+            'password' => $registerData['password'],
+            'first_name' => $registerData['first_name'],
+            'last_name' => $registerData['last_name'],
+            'passport_id' => $registerData['passport_id'],
+            'email' => $registerData['email'],
+            'address' => $registerData['address1'],
+            'city' => $registerData['city'],
+            'state' => $registerData['state'],
+            'country' => $registerData['country'],
+            'day_phone' => $registerData['phone'],
+            'departmental' => $registerData['phone']
+        );
+        return $this->insertItem(array('insert'=>$affiliate,'model'=>'users_affiliate'));
+    }
 }

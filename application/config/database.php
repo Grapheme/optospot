@@ -4,8 +4,6 @@ $active_group = 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = "localhost";
-//$db['default']['username'] = "optospot_db_user";
-//$db['default']['password'] = "eYuy4uGs";
 
 $db['default']['username'] = "optospot_db_user";
 $db['default']['password'] = "eYuy4uGs";

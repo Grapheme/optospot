@@ -19,6 +19,7 @@
 			'by_register_text' => 'Your demo account has been funded with virtual $1000. You can start trading using the login information sent to your email address, or open a real account and start making real profit.',
 			'by_register_text_pro' => 'Your account has been successfully registered. Make your first deposit in your Trader’s Cabinet and start making profit with OptoSpot.',
 			'begin_trading' => 'Start trading',
+			'active_submit_affiliate' => 'REGISTER AFFILIATE ACCOUNT',
 			'active_submit_real' => 'REGISTER REAL ACCOUNT',
 			'active_submit_demo' => 'REGISTER DEMO ACCOUNT',
 			'try_for_free' => 'Try for free',
@@ -63,7 +64,7 @@
 			'deposit_rbkmoney' => 'Deposit from RBK Money',
 			'deposit_submit_cancel' => 'Cancel payment',
 			'my-accounts' => 'My accounts',
-			'partner-program' => 'Partner program',
+			'partner-program' => 'IB program',
             'verification' => 'Verification',
 		),
 		'withdraw' => array(

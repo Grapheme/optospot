@@ -8,7 +8,12 @@
 			'phone' => 'Phone',
 			'email' => 'E-mail',
 			'country' => 'Country',
-			'open_account' => 'Open account'
+			'open_account' => 'Open account',
+            'address1' => 'Address',
+            'city' => 'City',
+            'state' => 'State',
+            'passport' => 'Passport',
+            'day_phone' => 'Day phone',
 		),
 		'signin' => array(
 			'title_form' => 'authorization',

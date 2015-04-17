@@ -28,7 +28,7 @@ $redirectLink = site_url('admin-panel/withdraw');
         ?>
     <?php endforeach;?>
 <?php endif; ?>
-    <br>Specify the amount of money, RUB: = <?=$post['amount']?>
+    <br>Specify the amount of money, USD: = <?=$post['amount']?>
     <?php $redirectLink .= '&amount='.urlencode($post['amount']);?>
     <br><br>Login under the administrator's <a href="<?=$redirectLink?>">link</a> to withdrawal.
 </body>

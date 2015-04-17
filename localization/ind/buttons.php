@@ -19,6 +19,7 @@
 			'by_register_text' => '$1,000 telah ditambahkan kea kun demo Anda. Anda dapat mulai menggunakannya untuk trading sekarang juga, atau Anda bisa membuka akunPro riil untuk mendapatkan keuntungan yang sebenarnya.',
 			'by_register_text_pro' => 'Akun Anda berhasil terdaftar. Untuk memulai trading Anda perlu melakukan deposit. Deposit minimum pada platform Optospot hanya $5.<br><br>Untuk membuat deposit Anda dapat menggunakan VISA / Mastercard atau sistem pembayaran yang Anda suka. Mulai trading sekarang.',
 			'begin_trading' => 'Mulai trading',
+            'active_submit_affiliate' => 'REGISTER AFFILIATE ACCOUNT',
 			'active_submit_real' => 'REGISTER REAL ACCOUNT',
 			'active_submit_demo' => 'REGISTER DEMO ACCOUNT',
 			'try_for_free' => 'Try for free',
@@ -63,7 +64,7 @@
 			'deposit_rbkmoney' => 'Deposit from RBK Money',
 			'deposit_submit_cancel' => 'Cancel',
 			'my-accounts' => 'My accounts',
-            'partner-program' => 'Partner program',
+            'partner-program' => 'IB program',
             'verification' => 'Verification',
 		),
 		'withdraw' => array(

@@ -16,7 +16,7 @@ body {
 .hightPageslist { overflow: auto; max-height: 300px; }
 .navbar .brand { font-size: 14px; padding-left: 10px; }
 
-button.pay-btn {
+button.pay-btn, a.pay-btn {
 	border-radius: 3px;
 	border: 1px solid #ccc;
 	background: #fff;

@@ -50,12 +50,16 @@
 			'profile_description' => '',
 			'my_accounts_title' => 'Личный кабинет - Мои счета',
 			'my_accounts_description' => '',
-            'partner_program_title' => 'Личный кабинет - Партнерская программа',
-            'partner_program_description' => '',
             'balance_title' => 'Личный кабинет - Пополнить счет',
 			'balance_description' => '',
 			'annotation' => 'В разделах «Основные» и «Адреса» вы можете заполнить и редактировать ваши личные данные. В секции «Дополнительно» указаны логин и пароль вашего торгового счета.',
-		),
+		    'ib_programm' => array(
+                'information.title' => 'Личный кабинет - Партнерская программа',
+                'information.description' => '',
+                'register.title' => 'Личный кабинет - Регистрация счета аффилианта',
+                'register.description' => '',
+            )
+        ),
 		'form_responce' => array(
 			'profile_saved' => 'Профиль сохранен',
 			'no_valid_fields' => 'Ошибка. Неправильно заполнены обязательные поля!',
@@ -138,6 +142,9 @@
             'partners_list_empty' => 'Список пуст',
             'invite_account_name' => 'Партнет',
             'invite_account_summa' => 'Сумма',
+        ),
+        'registration-affiliate' =>array(
+            'annotation' => 'Заполните форму для создания счета аффилинта.',
         ),
         'verification' =>array(
             'annotation' => '',

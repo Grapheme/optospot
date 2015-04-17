@@ -55,7 +55,13 @@
 			'balance_title' => 'Cabinet - Deposit Info',
 			'balance_description' => '',
 			'annotation' => 'In this section you can complete and update your personal information. Filling of all fields is not mandatory.',
-		),
+            'ib_programm' => array(
+                'information.title' => 'Cabinet - IB program',
+                'information.description' => '',
+                'register.title' => 'Cabinet - Register affiliate',
+                'register.description' => '',
+            )
+        ),
 		'form_responce' => array(
 			'profile_saved' => 'Profile is saved',
 			'no_valid_fields' => 'Error. Required fields are not filled!',
@@ -139,6 +145,9 @@
             'partners_list_empty' => 'List is empty',
             'invite_account_name' => 'Partner',
             'invite_account_summa' => 'Sum',
+        ),
+        'registration-affiliate' =>array(
+            'annotation' => 'Fill in the form to create an account affiliate.',
         ),
         'verification' =>array(
             'annotation' => '',

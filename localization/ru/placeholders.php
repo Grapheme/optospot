@@ -8,7 +8,12 @@
 			'email' => 'E-mail',
 			'phone' => 'Телефон',
 			'country' => 'Страна',
-			'open_account' => 'Открыть счет'
+			'open_account' => 'Открыть счет',
+            'address1' => 'Адрес',
+            'city' => 'Город',
+            'state' => 'Область, район, штат',
+            'passport' => 'Номер и серия паспорта',
+            'day_phone' => 'Телефон',
 		),
 		'signin' => array(
 			'title_form' => 'Авторизация',

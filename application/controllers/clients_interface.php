@@ -198,35 +198,6 @@ class Clients_interface extends MY_Controller {
         $this->load->view("clients_interface/my-accounts",$pagevar);
 	}
 
-    public function partnerProgram(){
-
-        $this->load->model('partner_program');
-
-        $pagevar = array(
-            'title' => $this->localization->getLocalMessage('client_cabinet','partner_program_title'),
-            'description' => $this->localization->getLocalMessage('client_cabinet','partner_program_description'),
-            'accounts' => array(),
-            'partners' => array(),
-            'langs' => $this->languages->getAll(),
-        );
-        if($accounts = $this->accounts->getWhere(NULL,array('email'=>$this->profile['email']),TRUE)):
-            foreach($accounts as $account):
-                $pagevar['accounts'][$account['demo']] = $account;
-            endforeach;
-        endif;
-        if($partners = $this->partner_program->getWhere(NULL,array('partner_id'=>$this->profile['id']),TRUE)):
-            $partnerIDs = array();
-            foreach($partners as $index => $partner):
-                $partnerIDs[$index] = $partner['invite_id'];
-            endforeach;
-            if (!empty($partnerIDs)):
-                $pagevar['partners'] = $this->accounts->getWhereIn(array('field'=>'id','where_in'=>$partnerIDs,'many_records'=>TRUE));
-            endif;
-
-        endif;
-        $this->load->view("clients_interface/partner-program",$pagevar);
-    }
-	
 	private function ExecuteUpdatingProfile($post){
 		
 		$account = array("id"=>$this->account['id'],"first_name"=>$post['first_name'],"last_name"=>$post['last_name'],"zip_code"=>$post['zip_code'],
@@ -254,4 +225,63 @@ class Clients_interface extends MY_Controller {
 		endif;
 		redirect($this->language.'/cabinet/withdraw');
 	}
+    /***************************************************************************************************************/
+    public function partnerProgramRegisterAffiliate(){
+
+        if ($this->profile['demo']):
+            redirect('cabinet/balance');
+        endif;
+
+        $this->load->model('users_affiliate');
+        if ($this->users_affiliate->getWhere(NULL,array('user_id'=>$this->profile['id']))):
+            redirect('cabinet/partner-program');
+        endif;
+
+        $this->load->model('partner_program');
+        $pagevar = array(
+            'title' => @$this->localization->getLocalMessage("client_cabinet","ib_programm")['register.title'],
+            'description' => @$this->localization->getLocalMessage("client_cabinet","ib_programm")['register.description'],
+            'accounts' => array(),
+            'partners' => array(),
+            'langs' => $this->languages->getAll(),
+        );
+        $this->load->view("clients_interface/ib_program/registration",$pagevar);
+    }
+
+    public function partnerProgram(){
+
+        if ($this->profile['demo']):
+            redirect('cabinet/balance');
+        endif;
+
+        $this->load->model('users_affiliate');
+        if (!$affiliate = $this->users_affiliate->getWhere(NULL,array('user_id'=>$this->profile['id']))):
+            redirect('cabinet/register-affiliate');
+        endif;
+
+        $this->load->model('partner_program');
+        $pagevar = array(
+            'title' => $this->localization->getLocalMessage('client_cabinet','ib_programm')['information.title'],
+            'description' => $this->localization->getLocalMessage('client_cabinet','ib_programm')['information.title'],
+            'accounts' => array(),
+            'partners' => array(),
+            'langs' => $this->languages->getAll(),
+        );
+        if($accounts = $this->accounts->getWhere(NULL,array('email'=>$this->profile['email']),TRUE)):
+            foreach($accounts as $account):
+                $pagevar['accounts'][$account['demo']] = $account;
+            endforeach;
+        endif;
+        if($partners = $this->partner_program->getWhere(NULL,array('partner_id'=>$this->profile['id']),TRUE)):
+            $partnerIDs = array();
+            foreach($partners as $index => $partner):
+                $partnerIDs[$index] = $partner['invite_id'];
+            endforeach;
+            if (!empty($partnerIDs)):
+                $pagevar['partners'] = $this->accounts->getWhereIn(array('field'=>'id','where_in'=>$partnerIDs,'many_records'=>TRUE));
+            endif;
+
+        endif;
+        $this->load->view("clients_interface/ib_program/information",$pagevar);
+    }
 }
