@@ -2,7 +2,9 @@
 
 $route['default_controller'] = "users_interface";
 $route['404_override'] = '';
-
+/******************************************************** GIT INTRERFACE **************************************************/
+$route['git-deploy/:any'] = "git_interface/gitDeployProject";
+/**************************************************************************************************************************/
 $route['redactor/upload'] = "users_interface/redactorUploadImage";
 $route['redactor/get-uploaded-images'] = "users_interface/redactorUploadedImages";
 $route['get-signup-accounts(\/:num)*?'] = "users_interface/getSignupAccount";
