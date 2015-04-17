@@ -238,9 +238,10 @@ class Clients_interface extends MY_Controller {
         endif;
 
         $this->load->model('partner_program');
+        $meta = $this->localization->getLocalMessage("client_cabinet","ib_programm");
         $pagevar = array(
-            'title' => @$this->localization->getLocalMessage("client_cabinet","ib_programm")['register.title'],
-            'description' => @$this->localization->getLocalMessage("client_cabinet","ib_programm")['register.description'],
+            'title' => @$meta['register.title'],
+            'description' => @$meta['register.description'],
             'accounts' => array(),
             'partners' => array(),
             'langs' => $this->languages->getAll(),
@@ -260,9 +261,10 @@ class Clients_interface extends MY_Controller {
         endif;
 
         $this->load->model('partner_program');
+        $meta = $this->localization->getLocalMessage('client_cabinet','ib_programm');
         $pagevar = array(
-            'title' => $this->localization->getLocalMessage('client_cabinet','ib_programm')['information.title'],
-            'description' => $this->localization->getLocalMessage('client_cabinet','ib_programm')['information.title'],
+            'title' => @$meta['information.title'],
+            'description' => @$meta['information.title'],
             'accounts' => array(),
             'partners' => array(),
             'langs' => $this->languages->getAll(),
