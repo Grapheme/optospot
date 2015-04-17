@@ -11,7 +11,12 @@ if (defined('ENVIRONMENT')){
     switch (ENVIRONMENT){
         case 'development': error_reporting(E_ALL);break;
         case 'localhost': error_reporting(E_ALL); break;
-        case 'production': error_reporting(E_ALL);break;
+        case 'production':
+            error_reporting(E_ALL);
+            ini_set('error_reporting', E_ALL);
+            ini_set('display_errors', 1);
+            ini_set('display_startup_errors', 1);
+            break;
         default:
             exit('The application environment is not set correctly.');
     }
