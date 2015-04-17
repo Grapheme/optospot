@@ -18,6 +18,23 @@
 			array('field'=>'country','label'=>' ','rules'=>'required|trim'),
 			array('field'=>'account_type','label'=>' ','rules'=>'required|trim|xss_clean'),
 		),
+        'signup_affiliate' =>array(
+			array('field'=>'user_id','label'=>'User ID','rules'=>'required'),
+			array('field'=>'answerType','label'=>' ','rules'=>'required|trim|xss_clean'),
+			array('field'=>'act','label'=>' ','rules'=>'required|trim|xss_clean'),
+			array('field'=>'office','label'=>' ','rules'=>'required|trim|xss_clean'),
+			array('field'=>'first_name','label'=>' ','rules'=>'required|trim|xss_clean'),
+			array('field'=>'last_name','label'=>' ','rules'=>'required|trim|xss_clean'),
+			array('field'=>'email','label'=>' ','rules'=>'required|valid_email|trim|xss_clean'),
+			array('field'=>'country','label'=>' ','rules'=>'required|trim'),
+
+			array('field'=>'address1','label'=>' ','rules'=>'required|trim|xss_clean'),
+			array('field'=>'city','label'=>' ','rules'=>'required|trim|xss_clean'),
+			array('field'=>'state','label'=>' ','rules'=>'required|trim|xss_clean'),
+			array('field'=>'passport_id','label'=>' ','rules'=>'required|trim|xss_clean'),
+			array('field'=>'departmental','label'=>' ','rules'=>'required|trim|xss_clean'),
+			array('field'=>'phone','label'=>' ','rules'=>'required|trim|xss_clean'),
+		),
 		'account_type' =>array(
 			array('field'=>'type','label'=>' ','rules'=>'required|trim|xss_clean'),
 		),

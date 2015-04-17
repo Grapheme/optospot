@@ -14,6 +14,9 @@ $route[':any/cabinet/partner-program'] = "clients_interface/partnerProgram";
 $route[':any/cabinet/profile'] = "clients_interface/profile";
 $route[':any/cabinet/withdraw'] = "clients_interface/withdraw";
 $route[':any/cabinet/documents/upload'] = "clients_interface/uploadWithdrawDocument";
+/************************************* CLIENT INTRERFACE IB PROGRAMM ***********************************************/
+$route[':any/cabinet/partner-program'] = "clients_interface/partnerProgram";
+$route[':any/cabinet/register-affiliate'] = "clients_interface/partnerProgramRegisterAffiliate";
 /*************************************************** ADMINS INTRERFACE ***********************************************/
 $route['admin-panel/actions/users-list(\/:any)*?'] = "admin_interface/accountsList";
 $route['admin-panel/actions/users/edit/id/:num'] = "admin_interface/accountEdit";
@@ -50,6 +53,8 @@ $route[':any/signup'] = "ajax_interface/signUp";
 $route[':any/signup-account'] = "ajax_interface/signUp";
 $route[':any/signup-real-account'] = "ajax_interface/createRealAccount";
 $route[':any/signup-demo-account'] = "ajax_interface/createDemoAccount";
+$route[':any/signup-affiliate-account'] = "ajax_interface/createAffiliateAccount";
+
 $route[':any/cabinet/withdraw/request'] = "ajax_interface/withdrawRequest";
 
 $route['get-chart-link'] = "ajax_interface/getChartLink";
