@@ -1,5 +1,5 @@
 <?php
-
+$debug = FALSE;
 switch ($_SERVER['HTTP_HOST']):
     case 'optospot.git': define('ENVIRONMENT', 'development'); break;
     case 'optospot.net': define('ENVIRONMENT', 'production');  break;
@@ -9,18 +9,18 @@ endswitch;
 
 if (defined('ENVIRONMENT')){
     switch (ENVIRONMENT){
-        case 'development': error_reporting(E_ALL);break;
-        case 'localhost': error_reporting(E_ALL); break;
-        case 'production':
-            error_reporting(E_ALL);
-            ini_set('error_reporting', E_ALL);
-            ini_set('display_errors', 1);
-            ini_set('display_startup_errors', 1);
-            break;
+        case 'development': error_reporting(E_ALL); $debug = TRUE; break;
+        case 'localhost': error_reporting(E_ALL); $debug = TRUE; break;
+        case 'production': error_reporting(0);break;
         default:
             exit('The application environment is not set correctly.');
     }
 }
+if ($debug):
+    ini_set('error_reporting', E_ALL);
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+endif;
 
 $system_path = 'system';
 $application_folder = 'application';
