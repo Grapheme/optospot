@@ -27,8 +27,14 @@
 <div class="clear"></div>
 <?php
     $mails_path = 'application/views/mails';
+    $payment_mails_path = 'application/views/mails/payment';
     $this->load->helper('file');
-    $files = get_dir_file_info($mails_path, $top_level_only = TRUE);
+    $files = array();
+foreach(get_dir_file_info($mails_path, $top_level_only = TRUE) as $index => $file):
+    if (is_file($mails_path.'/'.$file['name'])):
+        $files[$index] = $file;
+    endif;
+endforeach;
 if (isset($files['forgot.php'])):
     $files['forgot.php']['title'] = "Forgot password";
 endif;
@@ -40,6 +46,13 @@ if (isset($files['signup.php'])):
 endif;
 if (isset($files['withdraw.php'])):
     $files['withdraw.php']['title'] = "Withdraw";
+endif;
+if (isset($files['signup-affiliate.php'])):
+    $files['signup-affiliate.php']['title'] = "Signup affiliate";
+endif;
+$files_payment = get_dir_file_info($payment_mails_path, $top_level_only = TRUE);
+if (isset($files_payment['perfect-money.php'])):
+    $files_payment['perfect-money.php']['title'] = "Perfect Money";
 endif;
 ?>
 <?php if($this->input->get('mail') && $edit_file = get_file_info($mails_path.'/'.$this->input->get('mail'))):?>
@@ -70,6 +83,13 @@ endif;
             <tr class="align-center">
                 <td class="span6">
                     <a href="<?=base_url(uri_string().'?mail='.$file_name); ?>"><?=@$file['title'];?> [size: <?=@$file['size'];?> byte]</a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        <?php foreach ($files_payment as $file_name => $file): ?>
+            <tr class="align-center">
+                <td class="span6">
+                    <a href="<?=base_url(uri_string().'?mail=payment/'.$file_name); ?>"><?=@$file['title'];?> [size: <?=@$file['size'];?> byte]</a>
                 </td>
             </tr>
         <?php endforeach; ?>

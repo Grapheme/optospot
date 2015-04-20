@@ -19,37 +19,43 @@ $route[':any/cabinet/documents/upload'] = "clients_interface/uploadWithdrawDocum
 /************************************* CLIENT INTRERFACE IB PROGRAMM ***********************************************/
 $route[':any/cabinet/partner-program'] = "clients_interface/partnerProgram";
 $route[':any/cabinet/register-affiliate'] = "clients_interface/partnerProgramRegisterAffiliate";
+/******************************************************************************************************************/
+/******************************************** ADMIN USER INTRERFACE ***********************************************/
+/******************************************************************************************************************/
+$route['admin-panel/actions/users-list(\/:any)*?'] = "admin_users_interface/accountsList";
+$route['admin-panel/actions/users/edit/id/:num'] = "admin_users_interface/accountEdit";
+$route['admin-panel/actions/users/delete/id/:num'] = "admin_users_interface/accountDelete";
+
+$route['admin-panel/documents'] = "admin_users_interface/documents";
+$route['admin-panel/documents/approve/:num'] = "admin_users_interface/approveDocuments";
+$route['admin-panel/documents/reject/:num'] = "admin_users_interface/rejectDocuments";
+$route['admin-panel/documents/delete/:num'] = "admin_users_interface/deleteDocuments";
+/******************************************** ADMIN PAGES INTRERFACE ***********************************************/
+$route['admin-panel/actions/pages'] = "page_interface/pagesLang";
+$route['admin-panel/actions/pages/lang/:num/categories'] = "page_interface/langCategories";
+$route['admin-panel/actions/pages/lang/:num/properties'] = "page_interface/langProperties";
+$route['admin-panel/actions/pages/lang/:num/new-page'] = "page_interface/insertNewPage";
+$route['admin-panel/actions/pages/lang/:num/page/:num'] = "page_interface/editPage";
+$route['admin-panel/actions/pages/lang/:num/page/home'] = "page_interface/homePage";
+$route['admin-panel/actions/pages/lang/:num/page/trade'] = "page_interface/menuPage";
+$route['admin-panel/actions/pages/lang/:num/page/faq'] = "page_interface/menuPage";
+$route['admin-panel/actions/pages/lang/:num/page/deposit'] = "page_interface/menuPage";
+$route['admin-panel/actions/pages/lang/:num/page/contact-us']= "page_interface/menuPage";
+$route['admin-panel/actions/pages/delete-lang/:num'] = "page_interface/langDetele";
+$route['admin-panel/actions/pages/delete-category/:num'] = "page_interface/deleteCategory";
+$route['admin-panel/actions/pages/delete-page/:num'] = "page_interface/deletePage";
 /*************************************************** ADMINS INTRERFACE ***********************************************/
-$route['admin-panel/actions/users-list(\/:any)*?'] = "admin_interface/accountsList";
-$route['admin-panel/actions/users/edit/id/:num'] = "admin_interface/accountEdit";
-$route['admin-panel/actions/users/delete/id/:num'] = "admin_interface/accountDelete";
-$route['admin-panel/actions/pages'] = "admin_interface/pagesLang";
-$route['admin-panel/actions/pages/lang/:num/categories'] = "admin_interface/langCategories";
-$route['admin-panel/actions/pages/lang/:num/properties'] = "admin_interface/langProperties";
-$route['admin-panel/actions/pages/lang/:num/new-page'] = "admin_interface/insertNewPage";
-$route['admin-panel/actions/pages/lang/:num/page/:num'] = "admin_interface/editPage";
-$route['admin-panel/actions/pages/lang/:num/page/home'] = "admin_interface/homePage";
-$route['admin-panel/actions/pages/lang/:num/page/trade'] = "admin_interface/menuPage";
-$route['admin-panel/actions/pages/lang/:num/page/faq'] = "admin_interface/menuPage";
-$route['admin-panel/actions/pages/lang/:num/page/deposit'] = "admin_interface/menuPage";
-$route['admin-panel/actions/pages/lang/:num/page/contact-us']= "admin_interface/menuPage";
-$route['admin-panel/actions/pages/delete-lang/:num'] = "admin_interface/langDetele";
-$route['admin-panel/actions/pages/delete-category/:num'] = "admin_interface/deleteCategory";
-$route['admin-panel/actions/pages/delete-page/:num'] = "admin_interface/deletePage";
 $route['admin-panel/actions/settings'] = "admin_interface/settings";
 $route['admin-panel/actions/profile'] = "admin_interface/actions_profile";
 $route['redactor/upload'] = "admin_interface/redactorUploadImage";
 $route['admin-panel/withdraw'] = "admin_interface/withdraw";
 $route['admin-panel/withdraw-astropay-request'] = "admin_interface/withdrawAstropayRequest";
 
-$route['admin-panel/documents'] = "admin_interface/documents";
-$route['admin-panel/documents/approve/:num'] = "admin_interface/approveDocuments";
-$route['admin-panel/documents/reject/:num'] = "admin_interface/rejectDocuments";
-$route['admin-panel/documents/delete/:num'] = "admin_interface/deleteDocuments";
-
 $route['admin-panel/registered(\/:any)*?'] = "admin_interface/registered";
 $route['admin-panel/log(\/:any)*?'] = "admin_interface/logList";
-/*************************************************** USERS INTRERFACE ***********************************************/
+/************************************************************************************************************/
+/******************************************* USERS INTRERFACE ***********************************************/
+/************************************************************************************************************/
 $route[':any/login'] = "ajax_interface/loginIn";
 $route[':any/signup'] = "ajax_interface/signUp";
 $route[':any/signup-account'] = "ajax_interface/signUp";

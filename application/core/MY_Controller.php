@@ -10,11 +10,15 @@ class MY_Controller extends CI_Controller {
 	var $language = 0;
 	var $language_url = 'en';
 
+    var $section_roles = array(
+        0 => FALSE,
+        1 => 'home|pages',
+        2 => 'home|users-list|withdraw|documents|settings|log|pages|registered'
+    );
+
 	function __construct(){
 		
 		parent::__construct();
-        error_reporting(1);
-        ini_set('error_reporting', E_ALL);
 		$this->baseURL = base_url();
 		
 		if($this->session->userdata('logon') !== FALSE):
@@ -32,6 +36,15 @@ class MY_Controller extends CI_Controller {
 				endif;
 			endif;
 		endif;
+        if ($this->profile['moderator'] == 2):
+            error_reporting(1);
+            ini_set('error_reporting', E_ALL);
+        endif;
+        if ($this->is_moderator()):
+            foreach($this->section_roles as $group => $roles):
+                $this->section_roles[$group] = $roles ? explode('|',$roles) : FALSE;
+            endforeach;
+        endif;
 	}
 	
 	public function clearSession($redirect = TRUE){
@@ -878,4 +891,26 @@ class MY_Controller extends CI_Controller {
 	    return $return;
 	}
 
+    /**************************************************************************************************************/
+    public static function is_moderator(){
+
+        $CI = & get_instance();
+        if (in_array($CI->profile['moderator'],array(1,2))):
+            return TRUE;
+        else:
+            return FALSE;
+        endif;
+    }
+
+    public static function sectionRoles($item){
+
+        $CI = & get_instance();
+        if (!isset($CI->section_roles[$CI->profile['moderator']])):
+            show_error('Access Denied');
+        endif;
+        if (!in_array($item,$CI->section_roles[$CI->profile['moderator']])):
+            return FALSE;
+        endif;
+        return TRUE;
+    }
 }
