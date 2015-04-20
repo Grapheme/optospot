@@ -412,7 +412,7 @@ class Ajax_interface extends MY_Controller {
             'state' => $registerData['state'],
             'country' => $registerData['country'],
             'day_phone' => $registerData['phone'],
-            'departmental' => $registerData['phone']
+            'departmental' => $registerData['departmental']
         );
         return $this->insertItem(array('insert'=>$affiliate,'model'=>'users_affiliate'));
     }

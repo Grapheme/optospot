@@ -16,6 +16,12 @@
 				<?php $this->load->view("alert_messages/alert-error");?>
 				<?php $this->load->view("alert_messages/alert-success");?>
 				<div style="height:3px;"> </div>
+                <div class="grid_14">
+                    <a href="<?=site_url(uri_string());?>">#Traiders</a>
+                    <a href="<?=site_url(uri_string().'?group=2');?>">#Administrators</a>
+                    <a href="<?=site_url(uri_string().'?group=1');?>">#Moderators</a>
+                </div>
+                <div style="height:3px;"> </div>
 				<div class="grid_14">
 					<a href="" class="search-form-view no-clickable">Search</a>
 					<div class="div-search-form" <?=(!empty($accounts))?'style="display: none"':'';?>>

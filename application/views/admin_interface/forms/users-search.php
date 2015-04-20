@@ -1,4 +1,5 @@
 <?=form_open(uri_string(),array('class'=>'form-horizontal form-users-search','method'=>'GET')); ?>
+    <input type="hidden" name="search" value="1" />
 	<fieldset>
 		<hr/>
 		<div class="clearfix">
