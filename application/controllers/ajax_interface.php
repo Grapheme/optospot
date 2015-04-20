@@ -99,8 +99,8 @@ class Ajax_interface extends MY_Controller {
         endif;
         if($this->postDataValidation('signup_affiliate') == TRUE):
             if($resultData = $this->sendResisterAffiliateData($this->input->post())):
-                $mailtext = $this->load->view('mails/signup-affiliate',array('account'=>$resultData['accountID'],'reg_data'=>$resultData),TRUE);
-                $this->sendMail($resultData['email'],'support@optospot.net','Optospot trading platform','Welcome to Optospot.net',$mailtext);
+                #$mailtext = $this->load->view('mails/signup-affiliate',array('account'=>$resultData['accountID'],'reg_data'=>$resultData),TRUE);
+                #$this->sendMail($resultData['email'],'support@optospot.net','Optospot trading platform','Welcome to Optospot.net',$mailtext);
                 $json_request['status'] = TRUE;
                 $json_request['redirect'] = site_url($this->uri->segment(1).'/cabinet/partner-program');
             else:
