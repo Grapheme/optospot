@@ -544,7 +544,7 @@ class Admin_interface extends MY_Controller{
 			$pagevar['pagination'] = $this->pagination('admin-panel/actions/users-list'.getUrlLink(),5,$this->TotalCount,PER_PAGE_DEFAULT,TRUE);
 		else:
 			$pagevar['accounts'] = $this->accounts->limit($this->per_page,$this->offset,NULL,array('moderator'=>(int)$this->input->get('group')));
-            $pagevar['pagination'] = $this->pagination('admin-panel/actions/users-list',5,$this->accounts->countAllResults(array('id >'=> 0)),$this->per_page);
+            $pagevar['pagination'] = $this->pagination('admin-panel/actions/users-list',5,$this->accounts->countAllResults(array('moderator'=>(int)$this->input->get('group'))),$this->per_page);
 		endif;
 		$this->load->helper(array('date','form'));
 		for($i=0;$i<count($pagevar['accounts']);$i++):
