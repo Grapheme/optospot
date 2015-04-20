@@ -36,7 +36,7 @@ class Git_interface extends MY_Controller {
 			echo "\n";
 			echo $this->git->setAccessMode();
 			echo "\n";
-			echo $this->git->setAccessMode('/documents','0777');
+			echo $this->git->setAccessMode('/download','0777');
 		endif;
 	}
 }

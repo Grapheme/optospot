@@ -232,6 +232,10 @@ class Clients_interface extends MY_Controller {
             redirect('cabinet/balance');
         endif;
 
+        if ($this->accountVerified() === FALSE):
+            redirect('cabinet/balance');
+        endif;
+
         $this->load->model('users_affiliate');
         if ($this->users_affiliate->getWhere(NULL,array('user_id'=>$this->profile['id']))):
             redirect('cabinet/partner-program');
@@ -252,6 +256,10 @@ class Clients_interface extends MY_Controller {
     public function partnerProgram(){
 
         if ($this->profile['demo']):
+            redirect('cabinet/balance');
+        endif;
+
+        if ($this->accountVerified() === FALSE):
             redirect('cabinet/balance');
         endif;
 
@@ -285,5 +293,26 @@ class Clients_interface extends MY_Controller {
 
         endif;
         $this->load->view("clients_interface/ib_program/information",$pagevar);
+    }
+
+    public static function accountVerified($accountID = NULL){
+
+        $CI = & get_instance();
+        if (is_null($accountID)):
+            $accountID = $CI->account['id'];
+        endif;
+        $CI->load->model('users_documents');
+        $ApprovedDocuments = TRUE;
+        if($documentsList = $CI->users_documents->getWhere(NULL,array('user_id'=>$accountID),TRUE)):
+            foreach($documentsList as $document):
+                if ($document['approved'] != 1):
+                    $ApprovedDocuments = FALSE;
+                    break;
+                endif;
+            endforeach;
+        else:
+            $ApprovedDocuments = FALSE;
+        endif;
+        return $ApprovedDocuments;
     }
 }
