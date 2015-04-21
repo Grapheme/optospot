@@ -6,7 +6,7 @@ class Users_interface extends MY_Controller {
 		
 		parent::__construct();
         $this->load->model(array('pages','languages','category'));
-		if($this->loginstatus):
+		if($this->auth()):
 			$this->language = $this->accounts->value($this->account['id'],'language');
 		else:
 			$this->language = $this->languages->getBaseLanguage();
@@ -20,6 +20,8 @@ class Users_interface extends MY_Controller {
 			$this->language = $language['id'];
 			$this->language_url = $language['uri'];
 			$this->config->set_item('base_url',$this->baseURL.$this->language_url.'/');
+        else:
+            show_404();
 		endif;
         if ($this->input->get('pp') !== FALSE):
             setcookie('pp_reg',$this->input->get('pp'),time()+604800);

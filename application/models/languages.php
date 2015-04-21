@@ -33,6 +33,7 @@ class Languages extends MY_Model{
 	function languageExist($string){
 		
 		$this->db->select($this->fields);
+		$this->db->where('active',1);
 		$this->db->where('name',$string);
 		$this->db->or_where('uri',$string);
 		$query = $this->db->get($this->table,1);
