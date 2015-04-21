@@ -1,9 +1,9 @@
 <?php
 if(!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Moderator_lenguages extends MY_Model {
+class Moderator_languages extends MY_Model {
 
-    protected $table = "moderator_lenguages";
+    protected $table = "moderator_languages";
     protected $primary_key = "id";
     protected $fields = array("*");
 

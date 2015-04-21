@@ -16,24 +16,26 @@ class Ajax_interface extends MY_Controller {
 		endif;
 		$json_request = array('status'=>FALSE,'responseText'=>'','redirect'=>site_url());
 		if($this->postDataValidation('signin')):
-			if($user = $this->accounts->authentication($_POST['login'],$_POST['password'])):
+			if($user = $this->accounts->authentication()):
                 $this->load->model('languages');
                 if($newLanguage = $this->languages->languageExist($this->uri->segment(1))):
                     $this->accounts->updateField($user['id'],'language',$newLanguage['id']);
                 endif;
-                $json_request['status'] = TRUE;
-                $json_request['message'] = '';
                 $this->setLoginSession($user['id']);
-				$json_request['responseText'] = $this->localization->getLocalMessage('signin','login_success');
-
-                if($user['id'] == 0):
-					$json_request['redirect'] = site_url(ADMIN_START_PAGE);
-				elseif($user['id'] == 1):
-					$json_request['redirect'] = site_url('admin-panel/actions/pages');
-				else:
-					$this->config->set_item('base_url',$this->baseURL.$this->uri->segment(1).'/');
-					$json_request['redirect'] = site_url(USER_START_PAGE);
-				endif;
+                switch ($user['moderator']):
+                    case 0 :
+                        $this->config->set_item('base_url',$this->baseURL.$this->uri->segment(1).'/');
+                        $json_request['redirect'] = site_url(USER_START_PAGE);
+                        break;
+                    case 1 :
+                        $json_request['redirect'] = site_url('admin-panel/actions/pages'); break;
+                    case 2 :
+                        $json_request['redirect'] = site_url(ADMIN_START_PAGE); break;
+                    default :
+                        $json_request['redirect'] = ''; break;
+                endswitch;
+                $json_request['status'] = TRUE;
+                $json_request['responseText'] = $this->localization->getLocalMessage('signin','login_success');
 			else:
 				$json_request['responseText'] = $this->localization->getLocalMessage('signin','failure');
 			endif;

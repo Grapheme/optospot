@@ -9,9 +9,10 @@ class Admin_interface extends MY_Controller{
 	function __construct(){
 		
 		parent::__construct();
-		if($this->loginstatus === FALSE || $this->account['id'] > 1):
-			redirect('');
-		endif;
+
+        if (!$this->sectionRoles($this->uri->segment(3))):
+            show_error('Access Denied.');
+        endif;
 	}
 
     public function redactorUploadImage(){

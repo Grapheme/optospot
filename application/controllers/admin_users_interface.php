@@ -9,6 +9,7 @@ class Admin_users_interface extends MY_Controller{
 	function __construct(){
 		
 		parent::__construct();
+
         if (!$this->sectionRoles($this->uri->segment(3))):
             show_error('Access Denied.');
         endif;

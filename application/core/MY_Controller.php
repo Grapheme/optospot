@@ -36,14 +36,16 @@ class MY_Controller extends CI_Controller {
 				endif;
 			endif;
 		endif;
-        if ($this->profile['moderator'] == 2):
-            error_reporting(1);
-            ini_set('error_reporting', E_ALL);
-        endif;
-        if ($this->is_moderator()):
-            foreach($this->section_roles as $group => $roles):
-                $this->section_roles[$group] = $roles ? explode('|',$roles) : FALSE;
-            endforeach;
+        if ($this->loginstatus):
+            if ($this->profile['moderator'] == 2):
+                error_reporting(1);
+                ini_set('error_reporting', E_ALL);
+            endif;
+            if ($this->is_moderator()):
+                foreach($this->section_roles as $group => $roles):
+                    $this->section_roles[$group] = $roles ? explode('|',$roles) : FALSE;
+                endforeach;
+            endif;
         endif;
 	}
 	
@@ -62,6 +64,7 @@ class MY_Controller extends CI_Controller {
 	}
 	
 	public function setLoginSession($accountID){
+
 		if($accountInfo = $this->accounts->getWhere($accountID)):
 			$account = json_encode(array('id'=>$accountInfo['id'],'demo'=>$accountInfo['demo']));
 			$this->session->set_userdata(array('logon'=>md5($accountInfo['email']),'account'=>$account));
@@ -892,10 +895,44 @@ class MY_Controller extends CI_Controller {
 	}
 
     /**************************************************************************************************************/
-    public static function is_moderator(){
+    public static function is_client(){
 
         $CI = & get_instance();
-        if (in_array($CI->profile['moderator'],array(1,2))):
+        if ($CI->profile['moderator'] == 0):
+            return TRUE;
+        else:
+            return FALSE;
+        endif;
+    }
+
+    public static function is_administrator(){
+
+        $CI = & get_instance();
+        if ($CI->profile['moderator'] == 2):
+            return TRUE;
+        else:
+            return FALSE;
+        endif;
+    }
+
+    public static function auth(){
+
+        $CI = & get_instance();
+        if (!$CI->loginstatus):
+            return FALSE;
+        else:
+            return TRUE;
+        endif;
+    }
+
+    public static function is_moderator($groups = NULL){
+
+        if (is_null($groups)):
+            $groups = array(1,2);
+        endif;
+
+        $CI = & get_instance();
+        if (in_array($CI->profile['moderator'],$groups)):
             return TRUE;
         else:
             return FALSE;

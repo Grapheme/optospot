@@ -5,6 +5,7 @@ class Languages extends MY_Model{
 	protected $table = "languages";
 	protected $primary_key = "id";
 	protected $fields = array("id","name","uri","active","base");
+    protected $order_by = 'id';
 
 	function __construct(){
 		parent::__construct();
@@ -20,7 +21,7 @@ class Languages extends MY_Model{
 		return NULL;
 	}
 	
-	function getBaseLnguage(){
+	function getBaseLanguage(){
 	
 		$this->db->where('base',TRUE);
 		$query = $this->db->get($this->table,1);
@@ -52,4 +53,22 @@ class Languages extends MY_Model{
 		endif;
 		return FALSE;
 	}
+
+    public function getLangs(){
+
+        if ($this->profile['moderator'] == 1):
+            $languagesIDs = array();
+            foreach($this->db->select('language_id')->where('user_id',$this->profile['id'])->get('moderator_languages')->result_array() as $index => $langs):
+                $languagesIDs[] = $langs['language_id'];
+            endforeach;
+            $this->db->select($this->_fields())->order_by($this->order_by)->where_in('id',$languagesIDs);
+        else:
+            $this->db->select($this->_fields())->order_by($this->order_by);
+        endif;
+        $query = $this->db->get($this->table);
+        if($data = $query->result_array()):
+            return $data;
+        endif;
+        return NULL;
+    }
 }

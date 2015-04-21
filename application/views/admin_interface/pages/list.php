@@ -24,7 +24,7 @@
 			<?php endif;?>
 			</div>
 		<?php $this->load->view("admin_interface/includes/rightbar");?>
-		<?php $this->load->view("admin_interface/modal/leng-insert");?>
+		<?php $this->load->view("admin_interface/modal/lang-insert");?>
 		<?php $this->load->view("admin_interface/modal/page-delete");?>
 		</div>
 	</div>

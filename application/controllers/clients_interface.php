@@ -5,11 +5,11 @@ class Clients_interface extends MY_Controller {
 	function __construct(){
 		
 		parent::__construct();
-		if(!$this->loginstatus || !$this->account['id']):
-			redirect('');
+
+		if(!$this->auth() && !$this->is_client()):
+			show_404();
 		endif;
-		$this->load->model('languages');
-        $this->load->model('users_documents');
+		$this->load->model(array('languages','users_documents'));
 		$userLangURI = $this->languages->value($this->profile['language'],'uri');
 		if($userLangURI != $this->uri->segment(1)):
 			redirect($userLangURI.'/cabinet/balance');

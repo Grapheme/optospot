@@ -57,6 +57,7 @@
 		),
 		'insert_language' =>array(
 			array('field'=>'name','label'=>' ','rules'=>'required|trim|xss_clean'),
+			array('field'=>'nickname','label'=>' ','rules'=>'required|trim|xss_clean'),
 		),
 		'page_property' =>array(
 			array('field'=>'name','label'=>' ','rules'=>'required|trim|xss_clean'),

@@ -48,8 +48,14 @@
 		
 		$CI = & get_instance();
 		$langURI = $CI->language_url;
+
+        $languages = '';
+        foreach($CI->db->select('uri')->get('languages')->result_array() as $lang):
+            $languages[] = $lang['uri'];
+        endforeach;
+        $languages = implode('|',$languages);
 		if(!empty($uri_string)):
-			return preg_replace('/(.*)\/(ru|en|ind)(\/)?(.*)?/',"$1/$langURI/$4",$uri_string);
+			return preg_replace('/(.*)\/('.$languages.')(\/)?(.*)?/',"$1/$langURI/$4",$uri_string);
 		else:
 			return FALSE;
 		endif;

@@ -2,61 +2,14 @@
 
 class Users_interface extends MY_Controller {
 	
-	public function redactorUploadImage(){
-		
-		if($this->loginstatus):
-			$uploadPath = 'download';
-			if(isset($_FILES['file']['name']) && $_FILES['file']['error'] === UPLOAD_ERR_OK):
-				if($this->imageResize($_FILES['file']['tmp_name'])):
-					$uploadResult = $this->uploadSingleImage(getcwd().'/'.$uploadPath);
-					if($uploadResult['status'] === TRUE && !empty($uploadResult['uploadData'])):
-						if($this->imageResize($_FILES['file']['tmp_name'],NULL,TRUE,100,100,TRUE)):
-							$this->uploadSingleImage(getcwd().'/'.$uploadPath.'/thumbnail','thumb_'.$uploadResult['uploadData']['file_name']);
-						endif;
-						$file = array(
-							'filelink'=>base_url($uploadPath.'/'.$uploadResult['uploadData']['file_name'])
-						);
-						echo stripslashes(json_encode($file));
-					endif;
-				endif;
-			elseif($_FILES['file']['error'] !== UPLOAD_ERR_OK):
-				$message['error'] = $this->getFileUploadErrorMessage($_FILES['file']);
-				echo json_encode($message);
-			endif;
-		endif;
-	}
-	
-	public function redactorUploadedImages(){
-		
-		if($this->loginstatus):
-			$uploadPath = 'download';
-			$fullList[0] = $fileList = array('thumb'=>'','image'=>'','title'=>'Изображение','folder'=>'Миниатюры');
-			if($listDir = scandir($uploadPath)):
-				$index = 0;
-				foreach($listDir as $number => $file):
-					if(is_file(getcwd().'/'.$uploadPath.'/'.$file)):
-						$thumbnail = getcwd().'/'.$uploadPath.'/thumbnail/thumb_'.$file;
-						if(file_exists($thumbnail) && is_file($thumbnail)):
-							$fileList['thumb'] = site_url($uploadPath.'/thumbnail/thumb_'.$file);
-						endif;
-						$fileList['image'] = site_url($uploadPath.'/'.$file);
-						$fullList[$index] = $fileList;
-						$index++;
-					endif;
-				endforeach;
-			endif;
-			echo json_encode($fullList);
-		endif;
-	}
-	
 	function __construct(){
 		
 		parent::__construct();
-		$this->load->model('languages');
+        $this->load->model(array('pages','languages','category'));
 		if($this->loginstatus):
 			$this->language = $this->accounts->value($this->account['id'],'language');
 		else:
-			$this->language = $this->languages->getBaseLnguage();
+			$this->language = $this->languages->getBaseLanguage();
 		endif;
 		if($this->uri->segment(1) === FALSE):
 			if($this->language_url = $this->languages->value($this->language,'uri')):
@@ -75,7 +28,6 @@ class Users_interface extends MY_Controller {
 	
 	public function index(){
 
-		$this->load->model(array('pages','languages','category'));
 		$dataPage = $this->pages->getHomePage($this->language);
 		$pagevar = array(
 			'title' => (isset($dataPage[0]['title']) && !empty($dataPage[0]['title']))?$dataPage[0]['title']:'Optospot trading platform',
@@ -92,7 +44,6 @@ class Users_interface extends MY_Controller {
 	
 	public function pages($page_url = ''){
 		
-		$this->load->model(array('pages','languages','category'));
 		$dataPage = $this->pages->readFieldsUrl(noFirstSegment(uri_string()),$this->language);
 		if(!$dataPage):
 			show_404();
@@ -117,7 +68,6 @@ class Users_interface extends MY_Controller {
 			redirect('binarnaya-platforma/online-treiding','location',301);
 		endif;
 		
-		$this->load->model(array('pages','languages','category'));
 		$dataPage = $this->pages->readFieldsUrl('binarnaya-platforma/online-treiding',$this->language);
 		$pagevar = array(
 			'title' => (!empty($dataPage['title']))?$dataPage['title']:'Optospot trading platform',
@@ -138,8 +88,7 @@ class Users_interface extends MY_Controller {
 	}
 
 	public function award() {
-		
-		$this->load->model(array('pages','languages','category'));
+
 		$dataPage = $this->pages->readFieldsUrl('award',$this->language);
 		$pagevar = array(
 			'title' => (!empty($dataPage['title']))?$dataPage['title']:'Optospot trading platform',
@@ -162,7 +111,6 @@ class Users_interface extends MY_Controller {
 
 	public function chat() {
 		
-		$this->load->model(array('pages','languages','category'));
 		$dataPage = $this->pages->readFieldsUrl('binarnaya-platforma/online-treiding',$this->language);
 		$pagevar = array(
 			'title' => (!empty($dataPage['title']))?$dataPage['title']:'Optospot trading platform',
@@ -234,14 +182,13 @@ class Users_interface extends MY_Controller {
 
 	public function registering(){
 
-        if ($this->loginstatus):
-            if($this->profile['id'] == 0):
-                redirect(site_url(ADMIN_START_PAGE));
-            elseif($this->profile['id'] == 1):
-                redirect(site_url('admin-panel/actions/pages'));
-            else:
-                redirect(site_url(USER_START_PAGE));
-            endif;
+        if ($this->auth()):
+            switch ($this->profile['moderator']):
+                case 0 : redirect(USER_START_PAGE);
+                case 1 : redirect($this->baseURL.'admin-panel/actions/pages');
+                case 2 : redirect($this->baseURL.ADMIN_START_PAGE);
+                default : redirect('');
+            endswitch;
         endif;
 		$this->load->model(array('pages','languages','category'));
 		$dataPage = $this->pages->readFieldsUrl('registering',$this->language);
@@ -298,5 +245,52 @@ class Users_interface extends MY_Controller {
             exit;
         endif;
         echo 'payment ok';
+    }
+
+    public function redactorUploadImage(){
+
+        if($this->auth()):
+            $uploadPath = 'download';
+            if(isset($_FILES['file']['name']) && $_FILES['file']['error'] === UPLOAD_ERR_OK):
+                if($this->imageResize($_FILES['file']['tmp_name'])):
+                    $uploadResult = $this->uploadSingleImage(getcwd().'/'.$uploadPath);
+                    if($uploadResult['status'] === TRUE && !empty($uploadResult['uploadData'])):
+                        if($this->imageResize($_FILES['file']['tmp_name'],NULL,TRUE,100,100,TRUE)):
+                            $this->uploadSingleImage(getcwd().'/'.$uploadPath.'/thumbnail','thumb_'.$uploadResult['uploadData']['file_name']);
+                        endif;
+                        $file = array(
+                            'filelink'=>base_url($uploadPath.'/'.$uploadResult['uploadData']['file_name'])
+                        );
+                        echo stripslashes(json_encode($file));
+                    endif;
+                endif;
+            elseif($_FILES['file']['error'] !== UPLOAD_ERR_OK):
+                $message['error'] = $this->getFileUploadErrorMessage($_FILES['file']);
+                echo json_encode($message);
+            endif;
+        endif;
+    }
+
+    public function redactorUploadedImages(){
+
+        if($this->auth()):
+            $uploadPath = 'download';
+            $fullList[0] = $fileList = array('thumb'=>'','image'=>'','title'=>'Изображение','folder'=>'Миниатюры');
+            if($listDir = scandir($uploadPath)):
+                $index = 0;
+                foreach($listDir as $number => $file):
+                    if(is_file(getcwd().'/'.$uploadPath.'/'.$file)):
+                        $thumbnail = getcwd().'/'.$uploadPath.'/thumbnail/thumb_'.$file;
+                        if(file_exists($thumbnail) && is_file($thumbnail)):
+                            $fileList['thumb'] = site_url($uploadPath.'/thumbnail/thumb_'.$file);
+                        endif;
+                        $fileList['image'] = site_url($uploadPath.'/'.$file);
+                        $fullList[$index] = $fileList;
+                        $index++;
+                    endif;
+                endforeach;
+            endif;
+            echo json_encode($fullList);
+        endif;
     }
 }

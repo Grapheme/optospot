@@ -14,7 +14,7 @@ class Global_interface extends MY_Controller{
 			if($newLanguage = $this->languages->languageExist($this->uri->segment(3))):
 				$this->language = $newLanguage['id'];
 				$this->language_url = $newLanguage['uri'];
-				if($this->loginstatus):
+				if($this->auth()):
 					$this->accounts->updateField($this->account['id'],'language',$newLanguage['id']);
 					$this->profile = $this->accounts->getWhere($this->account['id']);
 					$this->session->set_userdata('profile',json_encode($this->profile));

@@ -1,7 +1,9 @@
 <div class="navbar">
 	<div class="navbar-inner">
+    <?php if (MY_Controller::is_administrator()): ?>
 		<a data-placement="bottom" href="#InsertLang" role="button tooltip" class="brand ttObject" data-toggle="modal" data-original-title="Click the button to add a language">Add language</a>
-		<ul class="nav" role="navigation">
+    <?php endif; ?>
+        <ul class="nav" role="navigation">
 		<?php for($i=0;$i<count($langs);$i++):?>
 			<li class="dropdown">
 				<a id="drop<?=$i?>" class="dropdown-toggle" data-toggle="dropdown" role="button" href="#"><?=mb_strtoupper($langs[$i]['name']);?> <b class="caret"></b></a>
@@ -26,7 +28,9 @@
 					<hr/>
 					<li><?=anchor('admin-panel/actions/pages/lang/'.$langs[$i]['id'].'/new-page','<i class="icon-plus-sign"></i> New page');?></li>
 					<li><?=anchor('admin-panel/actions/pages/lang/'.$langs[$i]['id'].'/categories','<i class="icon-th-list"></i> Categories',array('tabindex'=>'-1'));?></li>
-					<li><?=anchor('admin-panel/actions/pages/lang/'.$langs[$i]['id'].'/properties','<i class="icon-cog"></i> Properties',array('tabindex'=>'-1'));?></li>
+                    <?php if (MY_Controller::is_administrator()): ?>
+                    <li><?=anchor('admin-panel/actions/pages/lang/'.$langs[$i]['id'].'/properties','<i class="icon-cog"></i> Properties',array('tabindex'=>'-1'));?></li>
+                    <?php endif; ?>
 				</ul>
 			</li>
 		<?php endfor;?>

@@ -22,7 +22,7 @@
 				<div class="control-group">
 					<label for="description" class="control-label">Page description: </label>
 					<div class="controls">
-						<textarea rows="1" class="span14" name="description"><?=$page[$p]['description'];?></textarea>
+                        <textarea rows="8" style="height:50px;" class="span12" name="description"><?=$page[$p]['description'];?></textarea>
 					</div>
 				</div>
 				<div class="control-group">

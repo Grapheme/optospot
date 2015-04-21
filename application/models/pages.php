@@ -24,8 +24,8 @@ class Pages extends MY_Model{
 		return NULL;
 	}
 
-	function getPages(){
-			
+	function getPages($languagesIDs = NULL){
+
 		$this->db->select($this->fields);
 		$this->db->where('url !=','');
 		$this->db->where('url !=','trade');
@@ -35,6 +35,9 @@ class Pages extends MY_Model{
         $this->db->order_by('title');
 		$this->db->order_by('category');
 		$this->db->order_by($this->order_by);
+        if (!is_null($languagesIDs)):
+            $this->db->where_in('language',$languagesIDs);
+        endif;
 		$query = $this->db->get('pages');
 		if($data = $query->result_array()):
 			return $data;

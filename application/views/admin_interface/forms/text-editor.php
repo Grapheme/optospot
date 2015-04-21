@@ -16,7 +16,7 @@
 				<div class="control-group">
 					<label for="description" class="control-label">Page description: </label>
 					<div class="controls">
-						<textarea rows="8" style="height:50px;" class="span10" name="description"><?=$page['description'];?></textarea>
+						<textarea rows="8" style="height:50px;" class="span12" name="description"><?=$page['description'];?></textarea>
 					</div>
 				</div>
 				<div class="control-group">

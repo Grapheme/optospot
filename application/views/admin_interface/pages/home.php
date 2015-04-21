@@ -17,7 +17,7 @@
 				<?php $this->load->view("admin_interface/forms/home-editor");?>
 			</div>
 		<?php $this->load->view("admin_interface/includes/rightbar");?>
-		<?php $this->load->view("admin_interface/modal/leng-insert");?>
+		<?php $this->load->view("admin_interface/modal/lang-insert");?>
 		</div>
 	</div>
 	<?php $this->load->view("admin_interface/includes/scripts");?>
