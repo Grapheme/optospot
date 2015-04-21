@@ -10,7 +10,7 @@ class Admin_interface extends MY_Controller{
 		
 		parent::__construct();
 
-        if (!$this->sectionRoles($this->uri->segment(3))):
+        if (!$this->is_administrator()):
             show_error('Access Denied.');
         endif;
 	}
