@@ -85,4 +85,4 @@ $route[':any/ticker-curl'] = "ajax_interface/tickerCurl";
 /**************************************************************************************************************/
 $route[':any/change-site-language/:any'] = "global_interface/changeLanguage";
 $route[':any/:any'] = "users_interface/pages";
-$route['ru|ind|en|chi'] = "users_interface/index";
+$route['ru|ind|en|chi|may|spa|por|ben|in|th|tw|la'] = "users_interface/index";
