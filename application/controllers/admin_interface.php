@@ -9,8 +9,7 @@ class Admin_interface extends MY_Controller{
 	function __construct(){
 		
 		parent::__construct();
-
-        if (!$this->is_administrator()):
+        if (!$this->is_moderator()):
             show_error('Access Denied.');
         endif;
 	}
