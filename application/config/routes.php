@@ -56,10 +56,10 @@ $route['admin-panel/withdraw-astropay-request'] = "admin_interface/withdrawAstro
 $route['admin-panel/registered(\/:any)*?'] = "admin_interface/registered";
 $route['admin-panel/log(\/:any)*?'] = "admin_interface/logList";
 
-$route['admin-panel/documents'] = "admin_users_interface/documents";
-$route['admin-panel/documents/approve/:num'] = "admin_users_interface/approveDocuments";
-$route['admin-panel/documents/reject/:num'] = "admin_users_interface/rejectDocuments";
-$route['admin-panel/documents/delete/:num'] = "admin_users_interface/deleteDocuments";
+$route['admin-panel/documents'] = "admin_interface/documents";
+$route['admin-panel/documents/approve/:num'] = "admin_interface/approveDocuments";
+$route['admin-panel/documents/reject/:num'] = "admin_interface/rejectDocuments";
+$route['admin-panel/documents/delete/:num'] = "admin_interface/deleteDocuments";
 /************************************************************************************************************/
 /******************************************** GUEST INTERFACE ***********************************************/
 /************************************************************************************************************/
