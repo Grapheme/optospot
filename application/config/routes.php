@@ -28,11 +28,6 @@ $route[':any/cabinet/register-affiliate'] = "clients_interface/partnerProgramReg
 $route['admin-panel/actions/users-list(\/:any)*?'] = "admin_users_interface/accountsList";
 $route['admin-panel/actions/users/edit/id/:num'] = "admin_users_interface/accountEdit";
 $route['admin-panel/actions/users/delete/id/:num'] = "admin_users_interface/accountDelete";
-
-$route['admin-panel/documents'] = "admin_users_interface/documents";
-$route['admin-panel/documents/approve/:num'] = "admin_users_interface/approveDocuments";
-$route['admin-panel/documents/reject/:num'] = "admin_users_interface/rejectDocuments";
-$route['admin-panel/documents/delete/:num'] = "admin_users_interface/deleteDocuments";
 /******************************************** ADMIN PAGES INTERFACE ***********************************************/
 $route['redactor/upload'] = "admin_interface/redactorUploadImage";
 
@@ -60,6 +55,11 @@ $route['admin-panel/withdraw-astropay-request'] = "admin_interface/withdrawAstro
 
 $route['admin-panel/registered(\/:any)*?'] = "admin_interface/registered";
 $route['admin-panel/log(\/:any)*?'] = "admin_interface/logList";
+
+$route['admin-panel/documents'] = "admin_users_interface/documents";
+$route['admin-panel/documents/approve/:num'] = "admin_users_interface/approveDocuments";
+$route['admin-panel/documents/reject/:num'] = "admin_users_interface/rejectDocuments";
+$route['admin-panel/documents/delete/:num'] = "admin_users_interface/deleteDocuments";
 /************************************************************************************************************/
 /******************************************** GUEST INTERFACE ***********************************************/
 /************************************************************************************************************/
