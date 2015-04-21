@@ -17,8 +17,6 @@ class Users_interface extends MY_Controller {
 				redirect();
 			endif;
 		elseif($language = $this->languages->languageExist($this->uri->segment(1))):
-            print_r($language);
-            exit;
 			$this->language = $language['id'];
 			$this->language_url = $language['uri'];
 			$this->config->set_item('base_url',$this->baseURL.$this->language_url.'/');
