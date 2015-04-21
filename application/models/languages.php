@@ -34,8 +34,7 @@ class Languages extends MY_Model{
 		
 		$this->db->select($this->fields);
 		$this->db->where('active',1);
-		$this->db->where('name',$string);
-		$this->db->or_where('uri',$string);
+		$this->db->where('uri',$string);
 		$query = $this->db->get($this->table,1);
 		if($data = $query->result_array()):
 			return $data[0];
