@@ -65,6 +65,7 @@ $route['admin-panel/documents/delete/:num'] = "admin_interface/deleteDocuments";
 /************************************************************************************************************/
 $route[':any/create-account'] = "users_interface/createAccount";
 $route['(:any\/)*?logoff'] = "users_interface/logoff";
+$route['logoff'] = "users_interface/logoff";
 $route[':any/trade'] = "users_interface/trade";
 $route['ru/award'] = "users_interface/award";
 //$route[':any/chat'] = "users_interface/chat";
