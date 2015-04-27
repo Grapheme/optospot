@@ -63,6 +63,8 @@ class Languages extends MY_Model{
             endforeach;
             if ($languagesIDs):
                 $this->db->select($this->_fields())->order_by($this->order_by)->where_in('id',$languagesIDs);
+            else:
+                return NULL;
             endif;
         else:
             $this->db->select($this->_fields())->order_by($this->order_by);
