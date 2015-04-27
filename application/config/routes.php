@@ -64,15 +64,13 @@ $route['admin-panel/documents/delete/:num'] = "admin_interface/deleteDocuments";
 /******************************************** GUEST INTERFACE ***********************************************/
 /************************************************************************************************************/
 $route[':any/create-account'] = "users_interface/createAccount";
+$route[':any/logoff'] = "users_interface/logoff";
 $route[':any/trade'] = "users_interface/trade";
 $route['ru/award'] = "users_interface/award";
 //$route[':any/chat'] = "users_interface/chat";
 $route[':any/binarnaya-platforma/online-treiding'] = "users_interface/trade";
 $route[':any/registering'] = "users_interface/registering";
 $route[':any/perfectmoney/checked'] = "users_interface/perfectMoneyChecked";
-
-$route[':any/logoff'] = "users_interface/logoff";
-$route['logoff'] = "users_interface/logoff";
 /****************************************** GUEST INTERFACE AJAX *******************************************/
 $route[':any/login'] = "ajax_interface/loginIn";
 $route[':any/signup'] = "ajax_interface/signUp";

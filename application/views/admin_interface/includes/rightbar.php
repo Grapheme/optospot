@@ -17,7 +17,7 @@ endif;
 <?php if(MY_Controller::sectionRoles('log')): ?><li num="log"><?=anchor('admin-panel/log','Logs List');?></li><?php endif;?>
             <li class="nav-header">Actions</li>
 <?php if(MY_Controller::sectionRoles('registered')): ?><li num="registered"><?=anchor('admin-panel/registered','Registered');?></li><?php endif;?>
-			<li><?=anchor('logoff','Logout');?></li>
+			<li><?=anchor($this->language_url.'/logoff','Logout');?></li>
 		</ul>
 	</div>
 </div>
