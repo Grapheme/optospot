@@ -61,7 +61,9 @@ class Languages extends MY_Model{
             foreach($this->db->select('language_id')->where('user_id',$this->profile['id'])->get('moderator_languages')->result_array() as $index => $langs):
                 $languagesIDs[] = $langs['language_id'];
             endforeach;
-            $this->db->select($this->_fields())->order_by($this->order_by)->where_in('id',$languagesIDs);
+            if ($languagesIDs):
+                $this->db->select($this->_fields())->order_by($this->order_by)->where_in('id',$languagesIDs);
+            endif;
         else:
             $this->db->select($this->_fields())->order_by($this->order_by);
         endif;
