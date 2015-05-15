@@ -9,6 +9,12 @@ php_value max_input_time 500
 
 RewriteEngine On
 RewriteBase /
+
+RewriteCond %{HTTP_HOST} ^optospot.net$ [NC,OR]
+RewriteCond %{HTTP_HOST} ^www.optospot.net$ [NC,OR]
+RewriteCond %{HTTP_HOST} ^www.optospot.com$ [NC]
+RewriteRule ^(.*)$ http://optospot.com/$1 [R=301,NC,L]
+
 RewriteCond $1 !^(index\.php|images|robots\.txt|public)
 RewriteCond %{REQUEST_URI} !\.(css│js│jpg│gif)$
 RewriteCond %{REQUEST_FILENAME} !-f
