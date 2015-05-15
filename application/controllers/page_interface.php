@@ -43,7 +43,7 @@ class Page_interface extends MY_Controller{
 		endif;
 		$pagevar = array(
 			'langs' => $this->langs,
-			'langs_pages' => $this->pages->getPages($this->langIDs),
+			'langs_pages' => $this->pages->getPages($this->langIDs,array('id','	language','title','link','url','category','second_page','sort','manage')),
 			'page' => FALSE,
 			'redactor' => FALSE,
 			'form_legend' => FALSE,
@@ -72,7 +72,7 @@ class Page_interface extends MY_Controller{
 		endif;
 		$pagevar = array(
             'langs' => $this->langs,
-            'langs_pages' => $this->pages->getPages($this->langIDs),
+            'langs_pages' => $this->pages->getPages($this->langIDs,array('id','	language','title','link','url','category','second_page','sort','manage')),
 			'page' => array('title'=>'','description'=>'','link'=>'','url'=>'','content'=>'','category'=>0,'manage'=>1,'sort'=>0),
 			'redactor' => TRUE,
 			'form_legend' => 'The form of creating a new page. Language: '.mb_strtoupper($this->languages->value($this->uri->segment(5),'name')),
@@ -105,7 +105,7 @@ class Page_interface extends MY_Controller{
 		endif;
 		$pagevar = array(
             'langs' => $this->langs,
-            'langs_pages' => $this->pages->getPages($this->langIDs),
+            'langs_pages' => $this->pages->getPages($this->langIDs,array('id','	language','title','link','url','category','second_page','sort','manage')),
 			'page' => $this->pages->getWhere($this->uri->segment(7)),
 			'redactor' => TRUE,
 			'form_legend'=> 'The form of editing page. Language: '.mb_strtoupper($this->languages->value($this->uri->segment(5),'name')),
@@ -151,7 +151,7 @@ class Page_interface extends MY_Controller{
 		endif;
 		$pagevar = array(
             'langs' => $this->langs,
-            'langs_pages' => $this->pages->getPages($this->langIDs),
+            'langs_pages' => $this->pages->getPages($this->langIDs,array('id','	language','title','link','url','category','second_page','sort','manage')),
 			'page' => $this->pages->getHomePage($this->uri->segment(5)),
 			'form_legend' => 'The form of editing home page. Language: '.mb_strtoupper($this->languages->value($this->uri->segment(5),'name')),
 			'msgs' => $this->session->userdata('msgs'),
@@ -286,7 +286,7 @@ class Page_interface extends MY_Controller{
 		endif;
 		$pagevar = array(
             'langs' => $this->langs,
-            'langs_pages' => $this->pages->getPages($this->langIDs),
+            'langs_pages' => $this->pages->getPages($this->langIDs,array('id','	language','title','link','url','category','second_page','sort','manage')),
 			'category' => $this->category->getWhere(NULL,array('language'=>$this->uri->segment(5)),TRUE),
 			'form_legend' => 'Category list pages. Language: '.mb_strtoupper($this->languages->value($this->uri->segment(5),'name')),
 			'msgs' => $this->session->userdata('msgs'),
@@ -346,7 +346,7 @@ class Page_interface extends MY_Controller{
 		endif;
 		$pagevar = array(
             'langs' => $this->langs,
-            'langs_pages' => $this->pages->getPages($this->langIDs),
+            'langs_pages' => $this->pages->getPages($this->langIDs,array('id','	language','title','link','url','category','second_page','sort','manage')),
 			'lang' => $this->languages->getWhere($this->uri->segment(5)),
 			'form_legend' => 'Properties language. Language: '.mb_strtoupper($this->languages->value($this->uri->segment(5),'name')),
 			'msgs' => $this->session->userdata('msgs'),

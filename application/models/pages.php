@@ -24,9 +24,13 @@ class Pages extends MY_Model{
 		return NULL;
 	}
 
-	function getPages($languagesIDs = NULL){
+	function getPages($languagesIDs = NULL,$fields = NULL){
 
-		$this->db->select($this->fields);
+        if (is_null($fields)):
+            $this->db->select($this->fields);
+        else:
+            $this->db->select($fields);
+        endif;
 		$this->db->where('url !=','');
 		$this->db->where('url !=','trade');
 		$this->db->where('url !=','faq');
@@ -40,6 +44,13 @@ class Pages extends MY_Model{
         endif;
 		$query = $this->db->get('pages');
 		if($data = $query->result_array()):
+            $categories = array();
+            foreach((new Category())->getAll() as $category):
+                $categories[$category['id']] = $category['title'];
+            endforeach;
+            foreach($data as $index => $data_values):
+                $data[$index]['category_title'] = isset($categories[$data_values['category']]) ? $categories[$data_values['category']] : 'No category';
+            endforeach;
 			return $data;
 		endif;
 		return NULL;
