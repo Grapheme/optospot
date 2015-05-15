@@ -1,6 +1,6 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-$config['base_url'] 			= "http://optospot.net/";
+$config['base_url'] 			= "http://optospot.com/";
 $config['index_page'] 			= '';
 $config['uri_protocol']			= 'AUTO';
 $config['url_suffix'] 			= '';

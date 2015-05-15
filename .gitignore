@@ -1,6 +1,7 @@
 .idea
 /phpmyadmin-1001
 iptables
+.htaccess
 /download
 CI_phpStorm.php
 schema.zip

@@ -12,7 +12,7 @@
 	<div class="main-container">
 		<div class="container_12">
 			<div class="grid_12" style="text-align: center;">
-				<a href="http://optospot.net/ru/registering" class="top-circle">
+				<a href="<?php site_url('registering') ?>" class="top-circle">
 					<div>
 						<p class="circle-number">1</p>
 						<p class="circle-line"></p>

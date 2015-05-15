@@ -36,18 +36,14 @@ class Users_interface extends MY_Controller {
 			'description' => (isset($dataPage[0]['description']) && !empty($dataPage[0]['description']))?$dataPage[0]['description']:'Optospot trading platform',
 			'page' => (isset($dataPage))?$dataPage:array(),
 			'languages' => $this->languages->visibleLanguages(),
-			'main_menu' => $this->pages->readTopMenu($this->language),
-			'footer' => array(),
+			'menu' => $this->getMenu(),
 		);
-		$pagevar['footer']['category'] = $this->category->getWhere(NULL,array('language'=>$this->language),TRUE);
-		$pagevar['footer']['pages'] = $this->pages->getWhere(NULL,array('language'=>$this->language),TRUE);
         $this->load->view("users_interface/index",$pagevar);
 	}
 	
 	public function pages($page_url = ''){
 		
-		$dataPage = $this->pages->readFieldsUrl(noFirstSegment(uri_string()),$this->language);
-		if(!$dataPage):
+		if(!$dataPage = $this->pages->readFieldsUrl(noFirstSegment(uri_string()),$this->language)):
 			show_404();
 		endif;
 		$pagevar = array(
@@ -55,12 +51,9 @@ class Users_interface extends MY_Controller {
 			'description' => $dataPage['description'],
 			'content' => $dataPage['content'],
 			'active_category' => $dataPage['category'],
-			'main_menu' => $this->pages->readTopMenu($this->language),
 			'languages' => $this->languages->visibleLanguages(),
-			'footer' => array()
+            'menu' => $this->getMenu(),
 		);
-		$pagevar['footer']['category'] = $this->category->getWhere(NULL,array('language'=>$this->language),TRUE);
-		$pagevar['footer']['pages'] = $this->pages->getWhere(NULL,array('language'=>$this->language),TRUE);
 		$this->load->view("users_interface/pages",$pagevar);
 	}
 	
@@ -69,19 +62,15 @@ class Users_interface extends MY_Controller {
 		if($this->uri->segment(2) =='trade'):
 			redirect('binarnaya-platforma/online-treiding','location',301);
 		endif;
-		
 		$dataPage = $this->pages->readFieldsUrl('binarnaya-platforma/online-treiding',$this->language);
 		$pagevar = array(
 			'title' => (!empty($dataPage['title']))?$dataPage['title']:'Optospot trading platform',
 			'description' => $dataPage['description'],
 			'content' => $dataPage['content'],
 			'languages' => $this->languages->visibleLanguages(),
-			'main_menu' => $this->pages->readTopMenu($this->language),
 			'client' => array(),
-			'footer' => array()
+            'menu' => $this->getMenu(),
 		);
-		$pagevar['footer']['category'] = $this->category->getWhere(NULL,array('language'=>$this->language),TRUE);
-		$pagevar['footer']['pages'] = $this->pages->getWhere(NULL,array('language'=>$this->language),TRUE);
 		if($this->loginstatus):
 			$pagevar['client'] = $this->accounts->getWhere($this->account['id']);
 			$pagevar['client']['password'] = $this->encrypt->decode($pagevar['client']['trade_password']);
@@ -97,12 +86,9 @@ class Users_interface extends MY_Controller {
 			'description' => $dataPage['description'],
 			'content' => $dataPage['content'],
 			'languages' => $this->languages->visibleLanguages(),
-			'main_menu' => $this->pages->readTopMenu($this->language),
 			'client' => array(),
-			'footer' => array()
+            'menu' => $this->getMenu(),
 		);
-		$pagevar['footer']['category'] = $this->category->getWhere(NULL,array('language'=>$this->language),TRUE);
-		$pagevar['footer']['pages'] = $this->pages->getWhere(NULL,array('language'=>$this->language),TRUE);
 		if($this->loginstatus):
 			$pagevar['client'] = $this->accounts->getWhere($this->account['id']);
 			$pagevar['client']['password'] = $this->encrypt->decode($pagevar['client']['trade_password']);
@@ -119,12 +105,9 @@ class Users_interface extends MY_Controller {
 			'description' => $dataPage['description'],
 			'content' => $dataPage['content'],
 			'languages' => $this->languages->visibleLanguages(),
-			'main_menu' => $this->pages->readTopMenu($this->language),
 			'client' => array(),
-			'footer' => array()
-		);
-		$pagevar['footer']['category'] = $this->category->getWhere(NULL,array('language'=>$this->language),TRUE);
-		$pagevar['footer']['pages'] = $this->pages->getWhere(NULL,array('language'=>$this->language),TRUE);
+            'menu' => $this->getMenu(),
+        );
 		if($this->loginstatus):
 			$pagevar['client'] = $this->accounts->getWhere($this->account['id']);
 			$pagevar['client']['password'] = $this->encrypt->decode($pagevar['client']['trade_password']);
@@ -200,11 +183,8 @@ class Users_interface extends MY_Controller {
 			'description' => ($this->language == 3)?'Торговля бинарными опционами онлайн на Оptospot.net – доходное дело. Первый ваш шаг -  регистрации бинарные опционы. Регистрация на нашем сайте бинарных опционов предельно проста.':'',
 			'page' => (isset($dataPage))?$dataPage:array(),
 			'languages' => $this->languages->visibleLanguages(),
-			'main_menu' => $this->pages->readTopMenu($this->language),
-			'footer' => array(),
+            'menu' => $this->getMenu(),
 		);
-		$pagevar['footer']['category'] = $this->category->getWhere(NULL,array('language'=>$this->language),TRUE);
-		$pagevar['footer']['pages'] = $this->pages->getWhere(NULL,array('language'=>$this->language),TRUE);
 		$this->load->view("users_interface/registering",$pagevar);
 	}
 
@@ -294,5 +274,31 @@ class Users_interface extends MY_Controller {
             endif;
             echo json_encode($fullList);
         endif;
+    }
+
+    private function getMenu(){
+
+        $menu = array();
+        $categories = $this->category->getWhere(NULL,array('language'=>$this->language),TRUE);
+        $pages = $this->pages->getWhere(NULL,array('language'=>$this->language),TRUE);
+        foreach ($categories as $index_category => $category):
+            $menu[$category['id']]['id'] = $category['id'];
+            $menu[$category['id']]['title'] = $category['title'];
+            $menu[$category['id']]['pages'] = array();
+            $menu[$category['id']]['sub_pages'] = array();
+            foreach ($pages as $index_page => $page):
+                if($page['category'] == $category['id']):
+                    if ($page['second_page'] == 0 && !empty($page['link']) && !empty($page['url'])):
+                        $menu[$category['id']]['pages'][$index_page] = array('link' => $page['link'], 'url' => $page['url'],
+                            'sort' => $page['sort']);
+                    elseif
+                    ($page['second_page'] == 1 && !empty($page['link']) && !empty($page['url'])):
+                        $menu[$category['id']]['sub_pages'][$index_page] = array('link' => $page['link'],
+                            'url' => $page['url'], 'sort' => $page['sort']);
+                    endif;
+                endif;
+            endforeach;
+        endforeach;
+        return $menu;
     }
 }

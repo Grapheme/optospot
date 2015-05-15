@@ -451,7 +451,11 @@ $('.dark-screen').click(function(){
 	loginClose();
 });
 
-$('#deposit-link').click(function(){
-	$('.trading-popup').fadeToggle();
+$(".js-dropdownlist-link").click(function(){
+    $(".trading-popup").hide();
+    $(this).siblings(".trading-popup").fadeIn();
 	return false;
+});
+$(document).click(function(){
+    $(".trading-popup").hide();
 });
