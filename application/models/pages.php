@@ -45,7 +45,8 @@ class Pages extends MY_Model{
 		$query = $this->db->get('pages');
 		if($data = $query->result_array()):
             $categories = array();
-            foreach((new Category())->getAll() as $category):
+            $cat = new Category();
+            foreach($cat->getAll() as $category):
                 $categories[$category['id']] = $category['title'];
             endforeach;
             foreach($data as $index => $data_values):
