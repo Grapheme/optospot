@@ -1,5 +1,5 @@
 <?php
-$debug = TRUE;
+$debug = FALSE;
 switch ($_SERVER['HTTP_HOST']):
     case 'optospot.git': define('ENVIRONMENT', 'development'); break;
     case 'optospot.net': define('ENVIRONMENT', 'production');  break;

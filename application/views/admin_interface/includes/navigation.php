@@ -21,7 +21,10 @@
 				<?php endfor;?>
 				<?php for($j=0;$j<count($langs_pages);$j++):?>
 					<?php if($langs[$i]['id'] == $langs_pages[$j]['language']):?>
-						<li><?=anchor('admin-panel/actions/pages/lang/'.$langs[$i]['id'].'/page/'.$langs_pages[$j]['id'],'<i class="icon-circle-arrow-right"></i> ('.$langs_pages[$j]['category_title'].') '.$langs_pages[$j]['link'],array('tabindex'=>'-1'));?></li>
+                        <li>
+                            <?php $page_type = $langs_pages[$j]['second_page'] ? 'Secondary' : 'Primary' ; ?>
+                            <?= anchor('admin-panel/actions/pages/lang/' . $langs[$i]['id'] . '/page/' . $langs_pages[$j]['id'], '<i class="icon-circle-arrow-right"></i>' . $langs_pages[$j]['link'] .' ('. $langs_pages[$j]['category_title']. '|' .$page_type. ')' , array('tabindex' => '-1')); ?>
+                        </li>
 					<?php endif;?>
 				<?php endfor;?>
 					</div>
