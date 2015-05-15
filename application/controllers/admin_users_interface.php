@@ -9,7 +9,6 @@ class Admin_users_interface extends MY_Controller{
 	function __construct(){
 		
 		parent::__construct();
-
         if (!$this->sectionRoles($this->uri->segment(3))):
             show_error('Access Denied.');
         endif;
@@ -26,6 +25,18 @@ class Admin_users_interface extends MY_Controller{
 		);
 		$this->session->unset_userdata('msgs');
 		$this->session->unset_userdata('msgr');
+        if ($this->input->post('addmoderator')):
+            if (!$this->accounts->search('email',$this->input->post('email'))):
+                $this->accounts->insertRecord(array('moderator' => $this->input->post('group_id'), 'remote_id' => 0, 'demo' => 0,
+                    'first_name' => $this->input->post('first_name'),'last_name'=>'','email'=>$this->input->post('email'),
+                    'country' => 'Russia', 'password'=>md5('123456'),'trade_login'=>$this->input->post('email'),
+                    'trade_password'=>md5('123456'),'signdate'=>date('Y-m-d'),'active'=>1,'language'=>3
+                ));
+                $pagevar['msgs'] = 'Moderator insert';
+            else:
+                $pagevar['msgr'] = 'Email exist.';
+            endif;
+        endif;
 		if($this->input->get('search') !== FALSE):
 			$pagevar['accounts'] = $this->foundUsers($this->input->get());
 			$pagevar['pagination'] = $this->pagination('admin-panel/actions/users-list'.getUrlLink(),5,$this->TotalCount,PER_PAGE_DEFAULT,TRUE);
@@ -84,7 +95,10 @@ class Admin_users_interface extends MY_Controller{
 			unset($_POST['submit']);
 			if($this->postDataValidation('edit_account') == TRUE):
 				$this->ExecuteUpdatingAccount($this->uri->segment(6),$this->input->post());
-				$this->session->set_userdata('msgs','Profile saved!');
+                if($this->input->post('moderator') > 0):
+                    $this->ExecuteUpdatingModeratorLangs($this->uri->segment(6),$this->input->post('langs'));
+				endif;
+                $this->session->set_userdata('msgs','Profile saved!');
 				redirect($this->session->userdata('backpath'));
 			else:
 				$this->session->set_userdata('msgr','Error. Incorrectly filled in the required fields!');
@@ -118,19 +132,38 @@ class Admin_users_interface extends MY_Controller{
 	}
 
 	private function ExecuteUpdatingAccount($accountID,$post){
-		
-		if(isset($post['coach'])):
-			$post['coach'] = 0;
-		else:
-			$post['coach'] = 1;
-		endif;
-		if(!isset($post['active'])):
-			$post['active'] = 0;
-		endif;
-		$account = array("id"=>$accountID,"first_name"=>$post['first_name'],"last_name"=>$post['last_name'],"zip_code"=>$post['zip_code'],
-						"day_phone"=>$post['day_phone'],"home_phone"=>$post['home_phone'],"address1"=>$post['address1'],"address2"=>$post['address2'],
-						"country"=>$post['country'],"state"=>$post['state'],"city"=>$post['city'],"active"=>$post['active'],"coach"=>$post['coach']);
-		$this->updateItem(array('update'=>$account,'translit'=>NULL,'model'=>'accounts'));
-		return TRUE;
+
+        if (isset($post['coach'])):
+            $post['coach'] = 0;
+        else:
+            $post['coach'] = 1;
+        endif;
+        if (!isset($post['active'])):
+            $post['active'] = 0;
+        endif;
+        if (!isset($post['moderator'])):
+            $post['moderator'] = 0;
+        endif;
+        $account = array("id" => $accountID, "moderator" => $post['moderator'],
+            "first_name" => $post['first_name'], "last_name" => $post['last_name'],"zip_code" => $post['zip_code'],
+            "day_phone" => $post['day_phone'], "home_phone" => $post['home_phone'], "address1" => $post['address1'],
+            "address2" => $post['address2'],
+            "country" => $post['country'], "state" => $post['state'], "city" => $post['city'],
+            "active" => $post['active'], "coach" => $post['coach']);
+        $this->updateItem(array('update' => $account, 'translit' => NULL, 'model' => 'accounts'));
+        return TRUE;
 	}
+
+    private function ExecuteUpdatingModeratorLangs($accountID,$langs){
+
+        $this->load->model('moderator_languages');
+        $this->moderator_languages->delete(NULL,array('user_id'=>$accountID));
+        if (count($langs)):
+            $records = array();
+            foreach($this->input->post('langs') as $lang_id):
+                $records[] = array('user_id'=>$accountID,'language_id'=>$lang_id);
+            endforeach;
+            $this->moderator_languages->multiInsertRecords($records);
+        endif;
+    }
 }

@@ -13,7 +13,8 @@ class MY_Controller extends CI_Controller {
     var $section_roles = array(
         0 => FALSE,
         1 => 'home|pages',
-        2 => 'home|users-list|withdraw|documents|settings|log|pages|registered'
+        2 => 'home|users-list|users|withdraw|documents|settings|log|pages|registered',
+        3 => 'home|users-list|users|withdraw|documents|pages',
     );
 
 	function __construct(){
@@ -908,7 +909,7 @@ class MY_Controller extends CI_Controller {
     public static function is_administrator(){
 
         $CI = & get_instance();
-        if ($CI->profile['moderator'] == 2):
+        if (in_array($CI->profile['moderator'],array(2,3))):
             return TRUE;
         else:
             return FALSE;
@@ -928,7 +929,7 @@ class MY_Controller extends CI_Controller {
     public static function is_moderator($groups = NULL){
 
         if (is_null($groups)):
-            $groups = array(1,2);
+            $groups = array(1,2,3);
         endif;
 
         $CI = & get_instance();
@@ -941,11 +942,11 @@ class MY_Controller extends CI_Controller {
 
     public static function sectionRoles($item){
 
-        $CI = & get_instance();
+        $CI = &get_instance();
         if (!isset($CI->section_roles[$CI->profile['moderator']])):
             show_error('Access Denied');
         endif;
-        if (!in_array($item,$CI->section_roles[$CI->profile['moderator']])):
+        if (!in_array($item, $CI->section_roles[$CI->profile['moderator']])):
             return FALSE;
         endif;
         return TRUE;

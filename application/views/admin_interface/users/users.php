@@ -23,10 +23,14 @@
                 </div>
                 <div style="height:3px;"> </div>
 				<div class="grid_14">
-					<a href="" class="search-form-view no-clickable">Search</a>
+					<a href="" class="btn-primary search-form-view no-clickable">Search</a>
+                    <a href="" class="btn-primary add-form-view no-clickable">Add moderator</a>
 					<div class="div-search-form" <?=(!empty($accounts))?'style="display: none"':'';?>>
 						<?php $this->load->view('admin_interface/forms/users-search');?>
 					</div>
+                    <div class="div-add-form" style="display: none">
+                        <?php $this->load->view('admin_interface/forms/user-add');?>
+                    </div>
 				</div>
 				<div style="height:10px;"> </div>
 			<?php if($accounts):?>

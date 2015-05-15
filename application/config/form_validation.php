@@ -40,7 +40,7 @@
 		),
 		'edit_account' =>array(
 			array('field'=>'first_name','label'=>' ','rules'=>'required|trim|xss_clean'),
-			array('field'=>'last_name','label'=>' ','rules'=>'required|trim|xss_clean'),
+			array('field'=>'last_name','label'=>' ','rules'=>'trim|xss_clean'),
 			array('field'=>'zip_code','label'=>' ','rules'=>'trim|xss_clean'),
 			array('field'=>'day_phone','label'=>' ','rules'=>'trim'),
 			array('field'=>'home_phone','label'=>' ','rules'=>'trim'),

@@ -56,19 +56,16 @@ class Languages extends MY_Model{
 
     public function getLangs(){
 
-        if ($this->profile['moderator'] == 1):
-            $languagesIDs = array();
-            foreach($this->db->select('language_id')->where('user_id',$this->profile['id'])->get('moderator_languages')->result_array() as $index => $langs):
-                $languagesIDs[] = $langs['language_id'];
-            endforeach;
-            if ($languagesIDs):
-                $this->db->select($this->_fields())->order_by($this->order_by)->where_in('id',$languagesIDs);
-            else:
-                return NULL;
-            endif;
+        $languagesIDs = array();
+        foreach($this->db->select('language_id')->where('user_id',$this->profile['id'])->get('moderator_languages')->result_array() as $index => $langs):
+            $languagesIDs[] = $langs['language_id'];
+        endforeach;
+        if ($languagesIDs):
+            $this->db->select($this->_fields())->order_by($this->order_by)->where_in('id',$languagesIDs);
         else:
-            $this->db->select($this->_fields())->order_by($this->order_by);
+            return NULL;
         endif;
+        #$this->db->select($this->_fields())->order_by($this->order_by);
         $query = $this->db->get($this->table);
         if($data = $query->result_array()):
             return $data;

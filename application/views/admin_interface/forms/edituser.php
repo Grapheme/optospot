@@ -5,12 +5,16 @@
 			<li class="active"><a href="#general" data-toggle="tab">General</a></li>
 			<li><a href="#address" data-toggle="tab">Address</a></li>
 			<li><a href="#additionally" data-toggle="tab">Advanced</a></li>
+            <?php if($account['moderator'] == 0):?>
 			<li><a href="#documents" data-toggle="tab">Documents</a></li>
+            <?php else:?>
+                <li><a href="#language" data-toggle="tab">Languages</a></li>
+            <?php endif;?>
 		</ul>
 		<div id="ProductTabContent" class="tab-content">
         <?php
             $ApprovedDocuments = TRUE;
-            if($documentsList = $this->users_documents->getWhere(NULL,array('user_id'=>$account['id']),TRUE)):
+            if(!$account['moderator'] && $documentsList = $this->users_documents->getWhere(NULL,array('user_id'=>$account['id']),TRUE)):
                 foreach($documentsList as $document):
                     if ($document['approved'] != 1):
                         $ApprovedDocuments = FALSE;
@@ -65,6 +69,19 @@
                         </label>
 					</div>
 				</div>
+                <div class="control-group">
+                    <label for="moderator" class="control-label">Group</label>
+                    <div class="controls">
+                        <label class="select" style="padding-left: 0">
+                            <select autocomplete="off" name="moderator">
+                                <option <?= ($account['moderator'] == 0)? 'selected':'';?> value="0">Trader</option>
+                                <option <?= ($account['moderator'] == 1)? 'selected':'';?> value="1">Moderator</option>
+                                <option <?= ($account['moderator'] == 2)? 'selected':'';?> value="2">Administrator</option>
+                                <option <?= ($account['moderator'] == 3)? 'selected':'';?> value="3">Small administrator</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
 			</div>
 			<div class="tab-pane fade in" id="address">
 				<div class="control-group">
@@ -117,7 +134,6 @@
 						<input type="text" class="span8" disabled="disabled" autocomplete="off" name="password" value="<?=$account['password'];?>">
 					</div>
 				</div>
-			<?php if($this->account['id'] == 0):?>
 				<div class="control-group info">
 					<label for="remote_id" class="control-label">Trade ID: </label>
 					<div class="controls">
@@ -151,8 +167,8 @@
 						</label>
 					</div>
 				</div>
-			<?php endif;?>
 			</div>
+        <?php if($account['moderator'] == 0):?>
 			<div class="tab-pane fade in" id="documents">
 				<table class="opt-table">
 					<thead>
@@ -202,6 +218,34 @@
 					</tbody>
 				</table>
 			</div>
+        <?php else:?>
+            <div class="tab-pane fade in" id="language">
+                <table class="opt-table">
+                    <thead>
+                    <tr>
+                        <th>Language title</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                        $langs = new Languages();
+                        $languages = $langs->getAll();
+                        $moderator_languages = array();
+                        foreach ($this->db->select('language_id')->where('user_id',$account['id'])->get('moderator_languages')->result_array() as $user_lang):
+                            $moderator_languages[$user_lang['language_id']] = $user_lang['language_id'];
+                        endforeach;
+                    ?>
+                    <?php foreach($languages as $lang):?>
+                        <tr>
+                            <td><?=$lang['name']?></td>
+                            <td><input type="checkbox" name="langs[]" value="<?=$lang['id']?>" autocomplete="off" <?=(isset($moderator_languages[$lang['id']]))?'checked="checked"':'';?>></td>
+                        </tr>
+                    <?php endforeach;?>
+                    </tbody>
+                </table>
+            </div>
+        <?php endif;?>
 		</div>
 	</fieldset>
 	<div class="form-actions">
