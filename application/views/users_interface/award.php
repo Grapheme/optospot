@@ -12,7 +12,6 @@
 	<div class="award-container">
 		<h1 class="award-title">Forex Expo Awards 2013</h1>
 	</div>
-	
 	<div class="container_12">
 		<div class="grid_12">
 			<h1 class="award-h1"><?=$this->localization->getLocalMessage('award','title')?></h1>
@@ -22,9 +21,6 @@
 				<p><?=$this->localization->getLocalMessage('award','text')?></p>
 			</div>
 			<img src="<?=baseURL('img/award-photo-2.png');?>" style="width: 130%; margin-left: -30%;">
-			<!--<div class="award-quote">
-			 	Желание выиграть крупную сумму за короткий срок людей влечет на финансовые торги. К сожалению, с таким большим количеством брокеров, которые предлагают сегодня свои услуги для торговли бинарными опционами, тяжело выбрать надежную компанию для торговли на рынке. 
-			</div>-->
 		</div>
 		<div class="award-block-right">
 			<img src="<?=baseURL('img/award-photo-1.png');?>" style="width: 130%; margin-right: -30%;">
@@ -35,19 +31,7 @@
 	</div>
 	<div class="award-items-container">
 		<div class="container_12">
-			<div class="grid_12">
-				<h1>- Награды -</h1>
-			</div>
-			<div class="award-circle-div">
-				<div class="award-circle">
-					<div class="award-diploma-1"></div>
-					<h2>Кубок<br>&laquo;Best binary option broker&raquo;</h2>
-				</div>
-				<div class="award-circle">
-					<div class="award-diploma-2"></div>
-					<h2>Диплом<br>&laquo;Best binary option broker&raquo;</h2>
-				</div>
-			</div>
+            <?=$content?>
 		</div>
 	</div>
 	<div class="clear"></div>
