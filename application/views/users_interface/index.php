@@ -58,7 +58,7 @@
 				<p class="screen2-text" style="width: 670px; margin-bottom: 10px;"><?=$this->localization->getLocalMessage('index','screen_2_title')?></p>
 				<p class="screen2-text" style="font-size: 15px; width: 580px; font-weight: normal; margin: 50px 0 0; line-height: 2em;"><?=$this->localization->getLocalMessage('index','screen_2_text')?></p>
 			</a>
-			<a href="<?=site_url('award');?>" class="grid_8" id="screen-3">
+			<a href="<?=site_url('awards');?>" class="grid_8" id="screen-3">
 				<p class="screen2-text" style="width: 670px; margin-bottom: 10px;"><?=$this->localization->getLocalMessage('index','screen_3_title')?></p>
 				<p class="screen2-text" style="font-size: 22px; width: 670px; font-weight: normal; margin: 0 0 60px 0;"><?=$this->localization->getLocalMessage('index','screen_3_text')?></p>
 				<p class="screen2-text" style="font-size: 15px; font-weight: normal; line-height: 25px;"><?=$this->localization->getLocalMessage('index','screen_3_desc')?></p>
