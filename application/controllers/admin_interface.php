@@ -21,6 +21,27 @@ class Admin_interface extends MY_Controller{
         $file = array('filelink'=>base_url('download/'.$fileName));
         echo stripslashes(json_encode($file));
     }
+
+    public function profile(){
+
+        if($this->input->post('submit') !== FALSE):
+            if($this->input->post('password') != '' && ($this->input->post('password') == $this->input->post('confirm_password'))):
+                $this->accounts->updateRecord(array('id'=>$this->profile['id'],'password'=>md5($this->input->post('password')),'trade_password'=>md5($this->input->post('password'))));
+                $this->session->set_userdata('msgs','Password changed!');
+                redirect(uri_string());
+            else:
+                $this->session->set_userdata('msgr','Error. Incorrectly filled in the required fields!');
+            endif;
+        endif;
+
+        $pagevar = array(
+            'msgs' => $this->session->userdata('msgs'),
+            'msgr' => $this->session->userdata('msgr')
+        );
+        $this->session->unset_userdata('msgs');
+        $this->session->unset_userdata('msgr');
+        $this->load->view("admin_interface/profile",$pagevar);
+    }
     /******************************************* WITHDRAWAL ******************************************************/
     public function withdraw(){
 

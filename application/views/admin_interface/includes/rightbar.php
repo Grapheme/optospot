@@ -16,6 +16,7 @@ endif;
 <?php if(MY_Controller::sectionRoles('settings')): ?><li num="settings"><?=anchor('admin-panel/actions/settings','Settings');?></li><?php endif;?>
 <?php if(MY_Controller::sectionRoles('log')): ?><li num="log"><?=anchor('admin-panel/log','Logs List');?></li><?php endif;?>
             <li class="nav-header">Actions</li>
+                <li num="profile"><?=anchor('admin-panel/profile','Profile');?></li>
 <?php if(MY_Controller::sectionRoles('registered')): ?><li num="registered"><?=anchor('admin-panel/registered','Registered');?></li><?php endif;?>
 			<li><?=anchor($this->language_url.'/logoff','Logout');?></li>
 		</ul>

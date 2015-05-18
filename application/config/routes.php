@@ -53,6 +53,7 @@ $route['admin-panel/actions/profile'] = "admin_interface/actions_profile";
 $route['admin-panel/withdraw'] = "admin_interface/withdraw";
 $route['admin-panel/withdraw-astropay-request'] = "admin_interface/withdrawAstropayRequest";
 
+$route['admin-panel/profile'] = "admin_interface/profile";
 $route['admin-panel/registered(\/:any)*?'] = "admin_interface/registered";
 $route['admin-panel/log(\/:any)*?'] = "admin_interface/logList";
 
