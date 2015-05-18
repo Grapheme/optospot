@@ -31,6 +31,8 @@ class Ajax_interface extends MY_Controller {
                         $json_request['redirect'] = site_url('admin-panel/actions/pages'); break;
                     case 2 :
                         $json_request['redirect'] = site_url(ADMIN_START_PAGE); break;
+                    case 3 :
+                        $json_request['redirect'] = site_url(ADMIN_START_PAGE); break;
                     default :
                         $json_request['redirect'] = ''; break;
                 endswitch;

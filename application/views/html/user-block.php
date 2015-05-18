@@ -26,6 +26,9 @@ switch($this->profile['moderator']):
     case 2 :
         echo anchor(baseURL(ADMIN_START_PAGE),$this->localization->getLocalButton('user_block','admin_link'),array('class'=>'action-cabinet'));
         break;
+    case 3 :
+        echo anchor(baseURL(ADMIN_START_PAGE),$this->localization->getLocalButton('user_block','admin_link'),array('class'=>'action-cabinet'));
+        break;
     default :
 endswitch;
 ?>
