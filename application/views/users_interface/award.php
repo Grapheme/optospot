@@ -12,28 +12,7 @@
 	<div class="award-container">
 		<h1 class="award-title">Forex Expo Awards 2013</h1>
 	</div>
-	<div class="container_12">
-		<div class="grid_12">
-			<h1 class="award-h1"><?=$this->localization->getLocalMessage('award','title')?></h1>
-		</div>
-		<div class="award-block-left">
-			<div class="normal-text award-text" style="margin-top: 0;">
-				<p><?=$this->localization->getLocalMessage('award','text')?></p>
-			</div>
-			<img src="<?=baseURL('img/award-photo-2.png');?>" style="width: 130%; margin-left: -30%;">
-		</div>
-		<div class="award-block-right">
-			<img src="<?=baseURL('img/award-photo-1.png');?>" style="width: 130%; margin-right: -30%;">
-			<div class="normal-text award-text">
-				<?=$this->localization->getLocalMessage('award','text-2')?>
-			</div>
-		</div>
-	</div>
-	<div class="award-items-container">
-		<div class="container_12">
-            <?=$content?>
-		</div>
-	</div>
+    <?=$content?>
 	<div class="clear"></div>
 	<?php $this->load->view("users_interface/modal/signin");?>
 	<div class="dark-screen"></div>
