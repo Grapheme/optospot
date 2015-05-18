@@ -26,7 +26,7 @@
 					<?php foreach($accounts as $system => $account):?>
 						<button type="button" class="pay-btn submit_deposit_form" data-form-id="form_<?=$system;?>"><img src="<?=baseURL('img/'.$system.'.png');?>" /></button>
 					<?php endforeach; ?>
-                        <a href="<?=site_url('wire-deposit-insftuction');?>" target="-_blank" class="pay-btn submit_deposit_form" data-form-id="form_wire_transfer"><img style="width: 220px;height: 112px;" src="<?=baseURL('img/wire_transfer.png');?>" /></a>
+                        <a href="<?=site_url('wire-deposit-instruction');?>" target="-_blank" class="pay-btn submit_deposit_form" data-form-id="form_wire_transfer"><img style="width: 220px;height: 112px;" src="<?=baseURL('img/wire_transfer.png');?>" /></a>
 						<hr/>
 						<button type="button" id="submit_deposit_form_cancel" class="btn btn-mini btn-success"><?=$this->localization->getLocalButton('client_cabinet','deposit_submit_cancel');?></button>
 					</div>
