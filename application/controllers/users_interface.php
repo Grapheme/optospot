@@ -80,7 +80,7 @@ class Users_interface extends MY_Controller {
 
 	public function award() {
 
-		$dataPage = $this->pages->readFieldsUrl('award',$this->language);
+		$dataPage = $this->pages->readFieldsUrl(noFirstSegment(uri_string()),$this->language);
 		$pagevar = array(
 			'title' => (!empty($dataPage['title']))?$dataPage['title']:'Optospot trading platform',
 			'description' => $dataPage['description'],
