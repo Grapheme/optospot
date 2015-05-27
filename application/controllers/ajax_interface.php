@@ -7,38 +7,9 @@ class Ajax_interface extends MY_Controller {
 		parent::__construct();
 	}
 
-    public function loginIn(){
-
-        $redirect = '';
-        if($this->postDataValidation('signin')):
-            if($user = $this->accounts->authentication()):
-                $this->load->model('languages');
-                if($newLanguage = $this->languages->languageExist($this->uri->segment(1))):
-                    $this->accounts->updateField($user['id'],'language',$newLanguage['id']);
-                endif;
-                $this->setLoginSession($user['id']);
-                switch ($user['moderator']):
-                    case 0 :
-                        $this->config->set_item('base_url',$this->baseURL.$this->uri->segment(1).'/');
-                        $redirect = site_url(USER_START_PAGE);
-                        break;
-                    case 1 :
-                        $redirect = site_url('admin-panel/actions/pages'); break;
-                    case 2 :
-                        $redirect = site_url(ADMIN_START_PAGE); break;
-                    case 3 :
-                        $redirect = site_url(ADMIN_START_PAGE); break;
-                    default :
-                        $redirect = ''; break;
-                endswitch;
-            endif;
-        endif;
-        Redirect($redirect);
-    }
-
 	/******************************************** guests interface *******************************************************/
 	
-	public function ajaxLoginIn(){
+	public function loginIn(){
 		
 		if(!$this->input->is_ajax_request()):
 			show_error('В доступе отказано');
@@ -47,9 +18,9 @@ class Ajax_interface extends MY_Controller {
 		if($this->postDataValidation('signin')):
 			if($user = $this->accounts->authentication()):
                 $this->load->model('languages');
-                if($newLanguage = $this->languages->languageExist($this->uri->segment(1))):
-                    $this->accounts->updateField($user['id'],'language',$newLanguage['id']);
-                endif;
+//                if($newLanguage = $this->languages->languageExist($this->uri->segment(1))):
+//                    $this->accounts->updateField($user['id'],'language',$newLanguage['id']);
+//                endif;
                 $this->setLoginSession($user['id']);
                 switch ($user['moderator']):
                     case 0 :
