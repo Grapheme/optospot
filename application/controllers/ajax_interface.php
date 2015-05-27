@@ -18,9 +18,12 @@ class Ajax_interface extends MY_Controller {
 		if($this->postDataValidation('signin')):
 			if($user = $this->accounts->authentication()):
                 $this->load->model('languages');
-//                if($newLanguage = $this->languages->languageExist($this->uri->segment(1))):
-//                    $this->accounts->updateField($user['id'],'language',$newLanguage['id']);
-//                endif;
+                if($newLanguage = $this->languages->languageExist($this->uri->segment(1))):
+                    $this->db->set('language', $newLanguage['id']);
+                    $this->db->where('id', $user['id']);
+                    $this->db->insert('	users');
+                    //$this->accounts->updateField($user['id'],'language',$newLanguage['id']);
+                endif;
                 $this->setLoginSession($user['id']);
                 switch ($user['moderator']):
                     case 0 :
