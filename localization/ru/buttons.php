@@ -42,6 +42,8 @@
 			'account_number' => 'Номер счета',
 			'account_number_qiwi' => 'Номер телефона',
 			'expiry_date' => 'Срок действия карты',
+
+            'country' => 'Укажите страну',
 			'astropay_account_number' => 'Персональный идентификационный номер',
 			'astropay_bank_number' => 'Название банка',
 			'astropay_bank_branch' => 'Филиал банка',

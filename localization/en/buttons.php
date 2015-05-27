@@ -75,6 +75,7 @@
 			'account_number' => 'Specify the account to withdraw money',
 			'account_number_qiwi' => 'Specify the phone number to withdraw money',
 			'expiry_date' => 'Expiry date',
+			'country' => 'Choose country',
             'astropay_account_number' => 'Personal identification number:',
             'astropay_bank_number' => 'Bank Name',
             'astropay_bank_branch' => 'The branch of the bank',

@@ -19,6 +19,12 @@ $selectedPaySystem = key($clients_paysystems);
                 <?php endif;?>
             <?php endforeach;?>
             </select>
+            <div class="withdraw-div withdraw-input<?= ($selectedPaySystem == 110)? '' : ' hidden'; ?>" data-paysystem-id="110">
+                <label><?=$this->localization->getLocalButton('withdraw','country')?>:</label>
+                <select autocomplete="off" name="country" class="withdraw-div span7">
+                    <option value="UK">United Kingdom</option>
+                </select>
+            </div>
         <?php foreach($clients_paysystems as $paysystem_id => $paysystems):?>
             <?php if($paysystems['visible']):?>
                 <?php foreach($paysystems['inputs'] as $input_name => $input):?>

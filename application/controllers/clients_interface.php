@@ -103,6 +103,10 @@ class Clients_interface extends MY_Controller {
 				endif;
 			endforeach;
 		endif;
+
+        $hasNotApprovedDocuments = FALSE;
+        $pagevar['documents'] = array(1,2);
+
 		if ($hasNotApprovedDocuments || count($pagevar['documents']) == 0):
             $this->load->helper('date');
 			$pagevar['title'] = $this->localization->getUserDocuments('client_cabinet','title');
