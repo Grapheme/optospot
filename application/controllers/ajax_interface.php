@@ -19,9 +19,9 @@ class Ajax_interface extends MY_Controller {
 			if($user = $this->accounts->authentication()):
                 $this->load->model('languages');
                 if($newLanguage = $this->languages->languageExist($this->uri->segment(1))):
-                    $this->db->set('language', $newLanguage['id']);
-                    $this->db->where('id', $user['id']);
-                    $this->db->update('users');
+//                    $this->db->set('language', $newLanguage['id']);
+//                    $this->db->where('id', $user['id']);
+//                    $this->db->update('users');
                     //$this->accounts->updateField($user['id'],'language',$newLanguage['id']);
                 endif;
                 $this->setLoginSession($user['id']);
